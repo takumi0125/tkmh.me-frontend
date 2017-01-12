@@ -1,0 +1,353 @@
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+body.blog #globalNav li.blog a {
+  color: #fff;
+}
+
+body.blog #globalNav li.blog:before, body.blog #globalNav li.blog:after {
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}
+
+body.blog #contentsInner {
+  padding-top: 40px;
+}
+
+body.blog #contentsInner .archiveTtl {
+  margin-bottom: 100px;
+  font-size: 26px;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 900px) {
+  body.blog #contentsInner {
+    padding-top: 20px !important;
+  }
+  body.blog #contentsInner .archiveTtl {
+    margin-bottom: 40px;
+    font-size: 20px;
+  }
+}
+
+.articles article .thumb {
+  padding-top: 100%;
+}
+
+.articles article .detail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.articles article .detail span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -40%);
+          transform: translate(-50%, -40%);
+  line-height: 2;
+  font-size: 16px;
+}
+
+.articles article .detail {
+  -webkit-transform: translate(-101%);
+          transform: translate(-101%);
+}
+
+.articles article .detail a {
+  -webkit-transform-origin: right center;
+          transform-origin: right center;
+}
+
+.desktop .articles article .detail:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.desktop .articles article:hover .detail {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+article.main h1.ttl {
+  font-size: 26px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+article.main .date {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+article.main > .inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+article.main .body {
+  margin-top: 100px;
+}
+
+article.main .body p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 2;
+  position: relative;
+}
+
+article.main .body p a {
+  -webkit-transition: color 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: color 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  color: #999;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.desktop article.main .body p a:hover {
+  color: #fff;
+  background-color: #000;
+  text-decoration: none;
+}
+
+article.main .body .img {
+  box-shadow: 0 0 0 1px #ddd;
+  margin: 40px 0;
+}
+
+article.main .body .img a:after {
+  display: none;
+}
+
+article.main .body .img a {
+  text-decoration: none !important;
+}
+
+article.main .body .img a:hover {
+  background-color: transparent !important;
+}
+
+article.main .body .img img {
+  width: 100%;
+  display: block;
+  -webkit-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+  opacity: 0;
+}
+
+article.main .body .img img.loaded {
+  opacity: 1;
+}
+
+article.main .body .img.vertical img {
+  max-width: 400px;
+  margin: auto;
+}
+
+article.main .body .img3 {
+  box-shadow: 0 0 0 1px #ddd;
+  margin: 40px 0;
+}
+
+article.main .body .img3:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+article.main .body .img3 .img.vertical {
+  box-shadow: none;
+  width: calc(100% / 3);
+  float: left;
+  margin: 0;
+}
+
+article.main h2.ttl {
+  font-size: 16px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+article.main h2.ttl:after {
+  content: ':';
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  margin: 0 10px 0 4px;
+}
+
+article.main section.category, article.main section.tag {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+article.main section.category .categories, article.main section.category .tags, article.main section.tag .categories, article.main section.tag .tags {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+article.main h2.ttlComments {
+  font-size: 20px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+article.main #disqus_thread {
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 900px) {
+  article.main > .inner {
+    max-width: 100%;
+  }
+  article.main .body {
+    margin-top: 40px;
+  }
+  article.main .body .img3 {
+    box-shadow: none;
+    margin-bottom: 0;
+  }
+  article.main .body .img3 .img.vertical {
+    width: 100%;
+    box-shadow: 0 0 0 1px #ddd;
+    float: none;
+    margin: 40px 0;
+  }
+  article.main h2.ttl {
+    display: block;
+  }
+  article.main h2.ttlComments {
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  article.main h1.ttl {
+    font-size: 20px;
+  }
+  article.main article.main .body p {
+    font-size: 12px;
+  }
+  article.main h2.ttl {
+    font-size: 14px;
+  }
+  article.main h2.ttlComments {
+    font-size: 16px;
+  }
+}
+
+code pre {
+  font-family: monospace !important;
+  line-height: 1.4;
+}

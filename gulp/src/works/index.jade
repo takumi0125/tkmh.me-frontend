@@ -1,0 +1,57 @@
+//- src/assets/_layout/_default.jadeを継承
+extends /assets/_layout/_default
+
+//- meta設定
+block vars
+  - var title = 'Works | Takumi Hasegawa';
+  - var description = 'My client and private works.';
+  - var keywords = 'works, font-end engineer, technical director, web, website, programming, Javascript, HTML, CSS, Action Script, openFrameworks, Unity, C++, C#, digital contents';
+  - var bodyClass = 'works';
+
+//- ページ個別のCSS
+block css
+  link(rel="stylesheet", media="all", href="/assets/css/works.css", type="text/css")
+
+//- ページ個別のJS
+block script
+  script(src="/assets/js/works.js", type="text/javascript")
+
+//- ここからコンテンツ部分を記述
+block contents
+  header.contentsTtl
+    h1
+      span
+        |W
+      |orks
+    h2
+      |My client and private works.
+    
+  +searchPanel(true)
+  
+  div.inner
+    section.articles
+      article
+        a(href="/works/detail.html")
+          div.thumb
+            img(src="/dummy/worksThumb1.png")
+            p.detail
+              span
+                |View detail
+          div.ttls
+            h2.ttl
+              |タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル
+            p.date
+              |2016.06.20
+      article
+        a(href="/works/detail.html")
+          div.thumb
+            img(src="/dummy/worksThumb2.png")
+            p.detail
+              span
+                |View detail
+          div.ttls
+            h2.ttl
+              |タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル
+            p.date
+              |2016.06.20
+    +pageNavi

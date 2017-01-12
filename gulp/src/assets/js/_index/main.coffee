@@ -1,0 +1,1 @@
+$ -> new tkmh.index.Index()

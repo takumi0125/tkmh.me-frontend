@@ -1,0 +1,19 @@
+{
+  "name": "project libraries",
+  "version": "0.0.0",
+  "authors": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.3",
+    "gsap": "^1.18.3",
+    "underscore": "^1.8.3"
+  }
+}

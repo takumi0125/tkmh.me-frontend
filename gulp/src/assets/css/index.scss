@@ -1,0 +1,110 @@
+@charset "utf-8";
+
+@import "utils", "variables";
+
+// -------------------
+//  globalNav
+// -------------------
+
+body.index #globalNav li.index {
+  @include btnCommonActive;
+}
+
+
+// -------------------
+//  contents
+// -------------------
+
+#contents {
+  @include absoluteTopLeft;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  z-index: 20;
+  min-height: $minHeight;
+  overflow: hidden;
+}
+
+#contentsInner {
+  height: 100%;
+}
+
+@include forLessThanTablet {
+  #contents, #contentsInner {
+    min-height: 0;
+  }
+}
+
+
+// -------------------
+//  mainVisual
+// -------------------
+
+#mainVisual {
+  min-height: $minHeight;
+}
+
+@include forLessThanTablet {
+  #mainVisual {
+    min-height: 0;
+  }
+}
+
+
+// -------------------
+//  topGlobalNav
+// -------------------
+
+#topGlobalNav {
+  @include nav;
+  top: auto;
+  bottom: 0;
+  transition: transform 0.8s $easeOutExpo;
+  transform: translateY(80%);
+
+  ul {
+    text-align: center;
+  }
+
+  li:last-child {
+    margin-right: 10px;
+  }
+
+  .show & {
+    transform: translateY(0%);
+  }
+
+  .hide & {
+    transform: translateY(80%);
+  }
+}
+
+@include forLessThanTablet {
+  #topGlobalNav {
+    display: none;
+  }
+}
+
+
+// -------------------
+//  mainLogo
+// -------------------
+
+.mainLogo {
+  @include absoluteCenterVH;
+}
+
+h2 {
+  @include absoluteCenterH;
+  @include negativeMarginCenterV(140px);
+  font-size: 14px;
+  text-align: center;
+  z-index: 2;
+}
+
+@include forLessThanTablet {
+  h2 {
+    margin-top: 50px;
+    font-size: 10px;
+  }
+}

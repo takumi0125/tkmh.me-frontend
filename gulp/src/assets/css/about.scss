@@ -1,0 +1,231 @@
+@charset "utf-8";
+
+@import "utils", "variables";
+
+
+// -------------------
+//  contents
+// -------------------
+
+body.about #contentsInner {
+  padding-top: 80px;
+  max-width: $maxWidthInner + 80 * 2;
+  margin: 0 auto;
+}
+
+
+// -------------------
+//  globalNav
+// -------------------
+
+body.about #globalNav li.about {
+  @include btnCommonActive;
+}
+
+
+// -------------------
+//  ttl
+// -------------------
+
+.ttl {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+@include forTablet {
+  .ttl {
+    margin-bottom: 16px;
+  }
+}
+
+@include forSP {
+  .ttl {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+}
+
+
+// -------------------
+//  mainLogo
+// -------------------
+
+.mainLogo {
+  margin: 20px auto 100px;
+}
+
+
+@include forLessThanTablet {
+  .mainLogo {
+    margin: 20px auto 60px !important;
+  }
+
+  @media only screen and (orientation:landscape){
+    .mainLogo {
+      margin-top: 20px !important;
+    }
+  }
+}
+
+
+// -------------------
+//  description
+// -------------------
+
+.description {
+  width: 100%;
+  margin-bottom: 80px;
+  line-height: 1.6;
+}
+
+@include forTablet {
+  .description {
+    margin-bottom: 60px;
+  }
+}
+
+@include forSP {
+  .description {
+    margin-bottom: 40px;
+  }
+}
+
+
+// -------------------
+//  skills
+// -------------------
+
+.skills {
+  width: 100%;
+  letter-spacing: -.5em;
+  margin-bottom: 80px;
+
+  li {
+    font-size: 16px;
+    display: inline-block;
+    letter-spacing: 0.1em;
+    line-height: 2;
+
+    &:after {
+      content: '/';
+      display: inline-block;
+      margin: 0 4px;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+}
+
+@include forTablet {
+  .skills {
+    margin-bottom: 60px;
+  }
+}
+
+@include forSP {
+  .skills {
+    margin-bottom: 40px;
+
+    li {
+      font-size: 14px;
+    }
+  }
+}
+
+// -------------------
+//  sns
+// -------------------
+
+.sns {
+  margin-top: 120px;
+  width: 100%;
+  letter-spacing: -.5em;
+  text-align: center;
+
+  li {
+    @include btnCommon;
+    display: inline-block;
+    letter-spacing: normal;
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+    position: relative;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .desktop &:hover {
+      @include btnCommonActive;
+
+      svg {
+        fill: $colorWhite;
+      }
+    }
+  }
+
+  svg {
+    transition: fill 0.6s $easeOutExpo;
+    fill: $colorBlack;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@include forTablet {
+  .sns {
+    margin-top: 100px;
+  }
+}
+
+@include forSP {
+  .sns {
+    margin-top: 100px;
+
+    li {
+      width: 20px;
+      height: 20px;
+      margin: 0 8px;
+    }
+  }
+}
+
+
+// -------------------
+//  email
+// -------------------
+
+.email {
+  @include btnCommon;
+  width: 140px;
+  height: 30px;
+  text-align: center;
+  margin-top: -4px;
+
+  a {
+    font-size: 16px;
+    line-height: 34px;
+  }
+
+  .desktop &:hover {
+    @include btnCommonActive;
+  }
+}
+
+@include forSP {
+  .email {
+    margin-bottom: 14px;
+  }
+}

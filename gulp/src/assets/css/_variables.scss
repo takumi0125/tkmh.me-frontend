@@ -1,0 +1,84 @@
+@charset "utf-8";
+
+$colorBlack: #000;
+$colorWhite: #fff;
+$colorGray: #999;
+$colorGray2: #ddd;
+
+$maxWidth: 1300px;
+$maxWidthInner: 900px;
+$minHeight: 600px;
+
+@mixin nav {
+  @include absoluteTopRight;
+  padding: 30px 20px;
+  width: 100%;
+
+  ul {
+    letter-spacing: -0.4em;
+    text-align: right;
+  }
+
+  li {
+    @include btnCommon;
+    letter-spacing: 0.1em;
+    display: inline-block;
+    margin: 0 10px;
+    height: 26px;
+  }
+
+  li:last-child {
+    margin-right: 0;
+  }
+
+  .desktop & li:hover {
+    @include btnCommonActive;
+  }
+
+  a {
+    padding: 0 8px;
+    line-height: 30px;
+  }
+}
+
+@mixin btnCommonActive {
+  a {
+    color: $colorWhite;
+  }
+
+  &:before, &:after {
+    transform: translateX(0%);
+  }
+}
+
+@mixin btnCommon {
+  overflow: hidden;
+  position: relative;
+
+  a {
+    transition: color 0.6s $easeOutExpo;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  &:before, &:after {
+    @include absoluteTopLeft;
+    transition: transform 0.6s $easeOutExpo;
+    background-color: rgba(0, 0, 0, 0.6);
+    content: '';
+    height: 100%;
+    width: 100%;
+  }
+
+  &:before {
+    transform: translateX(104%);
+  }
+
+  &:after {
+    transform: translateX(-104%);
+  }
+}
