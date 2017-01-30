@@ -33,7 +33,7 @@ class Common
       return false
 
     # 画面最後のスクロールトップボタン
-    @$wrapper.find('.btnScrollTop').on 'click', (e)->
+    @$wrapper.find('.btnScrollTop').on 'click', (e)=>
       tkmh.windowScrollTo @$window.scrollTop(), 0, 0.6, @pause, @start
       return false
 
