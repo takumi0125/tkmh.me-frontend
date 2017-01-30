@@ -103,6 +103,7 @@ body.blog #globalNav li.blog a {
 
 body.blog #globalNav li.blog:before, body.blog #globalNav li.blog:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -149,6 +150,7 @@ body.blog #contentsInner .archiveTtl {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -40%);
+      -ms-transform: translate(-50%, -40%);
           transform: translate(-50%, -40%);
   line-height: 2;
   font-size: 16px;
@@ -156,11 +158,13 @@ body.blog #contentsInner .archiveTtl {
 
 .articles article .detail {
   -webkit-transform: translate(-101%);
+      -ms-transform: translate(-101%);
           transform: translate(-101%);
 }
 
 .articles article .detail a {
   -webkit-transform-origin: right center;
+      -ms-transform-origin: right center;
           transform-origin: right center;
 }
 
@@ -170,6 +174,7 @@ body.blog #contentsInner .archiveTtl {
 
 .desktop .articles article:hover .detail {
   -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
           transform: translate(0, 0);
 }
 

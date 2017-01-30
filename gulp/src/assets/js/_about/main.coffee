@@ -1,1 +1,0 @@
-$ -> new tkmh.about.About()

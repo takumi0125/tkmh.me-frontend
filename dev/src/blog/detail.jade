@@ -1,0 +1,176 @@
+//- src/assets/_layout/_default.jadeを継承
+extends /assets/_layout/_default.jade
+
+//- meta設定
+block vars
+  - var title = 'Blog | Takumi Hasegawa';
+  - var description = 'Development and Information etc...';
+  - var keywords = 'blog, font-end engineer, technical director, web, website, programming, Javascript, HTML, CSS, Action Script, openFrameworks, Unity, C++, C#, digital contents';
+  - var bodyClass = 'blog detail';
+
+//- ページ個別のCSS
+block css
+  link(rel="stylesheet", media="all", href="/assets/css/blog.css", type="text/css")
+
+//- ページ個別のJS
+block script
+  script(src="/assets/js/blog.js", type="text/javascript")
+
+//- ここからコンテンツ部分を記述
+block contents
+  header.contentsTtl
+    h1
+      |Blog
+    h2
+      |Development and information etc...
+    
+  +searchPanel(true)
+  
+  div.inner
+    article.main
+      h1.ttl
+        |ブログのタイトル
+        
+      p.date
+        |2016.06.21
+        
+      section.category
+        h2.ttl
+          |Category
+          
+        div.categories
+          ul
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+      section.tag
+        h2.ttl
+          |Tags
+          
+        div.tags
+          ul
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+            li
+              a(href="#")
+                |tagtag (10)
+          
+      div.inner
+        div.body.
+          <pre>
+          <code class="coffeescript">
+            # mouse move (touch move)
+            mouseMoveHandler: (clientX, clientY)=>
+              intersects = @getRaycasterIntersects clientX, clientY
+
+              # 交差しているMeshがあれば、intersectsの配列に格納される
+              if intersects.length > 0
+                intersect = intersects[0]
+                color = @sphereGeometry.faces[intersect.faceIndex].color
+                TweenMax.killTweensOf color
+                TweenMax.to color, 0.2, { r: Math.random() * 6, g: Math.random() * 6, b: Math.random() * 6, ease: Sine.easeOut, onUpdate: => @sphereGeometry.colorsNeedUpdate = true }
+                TweenMax.to color, 0.6, { r: 1, g: 1, b: 1, ease: Sine.easeInOut, delay: 0.2, onUpdate: => @sphereGeometry.colorsNeedUpdate = true }
+          </code>
+          </pre>
+          
+          
+          <p>3Dの表現のなかで割りと好きなトゥーンシェーディングを<a href="http://threejs.org/">Three.js</a>で実装してみました。</p>
+          <p class="img"><a href="http://dev.tkmh.me/study/toonshadingSample/" target="_blank"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/main2.png" alt="main" class="alignnone size-full wp-image-292" /></a></p>
+          <p><a href="http://dev.tkmh.me/study/toonshadingSample/" target="_blank">DEMO</a></p>
+          <p>トゥーンシェーディングの主な特徴は</p>
+          <p>・エッジがはっきりと縁取られている<br />
+          ・陰影がはっきりしている</p>
+          <p>です。アニメっぽい表現のシェーディングです。アニメキャラが登場するゲームでよく使われる手法です。</p>
+          <p>最近だと以下のミュージックビデオコンテンツもWebGLのトゥーンシェーディングっぽい表現で作られていました。</p>
+          <p><a href="http://www.dennis.video/" target="_blank">http://www.dennis.video/</a></p>
+          <p>今回のデモは、缶の3Dモデル(objファイル)をThree.jsで読み込み、テクスチャを適用して表示しています。</p>
+          <p>3Dデータは以下のサイトでフリーのものをダウンロードしました。</p>
+          <p>3D Models, Download 3D Models at TurboSquid<br />
+          <a class="breakall" href="http://www.turbosquid.com/Search/3D-Models/free" target="_blank">http://www.turbosquid.com/Search/3D-Models/free</a></p>
+          <p>ダウンロードしたデータを<a href="https://www.blender.org/" target="_blank">blender</a>でインポートし、テクスチャをつくるためにUV展開図なるものを生成しました。</p>
+          <p class="img"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase.png" alt="textureBase" class="alignnone size-full wp-image-323" srcset="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase-150x150.png 150w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase-300x300.png 300w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase.png 1024w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+          <p>要は缶の展開図なのですが、この形に合わせてテクスチャを作れば、3Dモデルに綺麗に貼り付けてくれます。<br />
+          このUV展開図に合わせてつくったテクスチャが以下のものです。側面と上の方を青くしたいだけなので、その部分を青で塗りつぶし、それ以外の領域はグレーにしています。雑です。</p>
+          <p class="img"><img src="http://dev.tkmh.me/study/toonshadingSample/assets/img/texture.png" alt="texture" class="alignnone size-full" /></p>
+          <p>実際は以下の画像はテクスチャとして使用していませんが、UV展開図とテクスチャを重ねると、どの部分を青くしてるのかわかりやすいかと思います。</p>
+          <p class="img"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2.png" alt="texture2" class="alignnone size-full wp-image-332" srcset="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2-150x150.png 150w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2-300x300.png 300w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2.png 1024w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+          <p>トゥーンシェーディングに加え、金属光沢を再現するために、3D空間上の点光源が反射しているような表現と、凹凸感を表現をするためのバンプマップ(法線マップ)という手法をGLSLで実装しています。<br />
+          バンプマップ用の法線マップ画像はなんとphotoshopのフィルタ機能で作ることができました。楽ちん。</p>
+          <p class="img"><img src="http://dev.tkmh.me/study/toonshadingSample/assets/img/normalMap.png" alt="texture" class="alignnone size-full" /></p>
+          <p>この画像を使用して、GLSLでゴニョゴニョっとやってあげるだけで、凹凸感を実現できます。缶側面のgithubのロゴの部分がへこんだように見えるかと思いますが、これは3Dモデルが実際にへこんだ形になっているのではなく、擬似的にそう見えるように計算して表示させる技法です。</p>
+          <p>※上記の表現技法の実装は正直手前実装は難しいので、以下の記事を参考にしています。<br />
+          <a href="http://wgld.org/d/webgl/w048.html" target="_blank">wgld.org | WebGL: トゥーンレンダリング |</a><br />
+          <a href="http://wgld.org/d/webgl/w023.html" target="_blank">wgld.org | WebGL: 反射光によるライティング |</a><br />
+          <a href="http://wgld.org/d/webgl/w042.html" target="_blank">wgld.org | WebGL: バンプマッピング |</a><br />
+          <a href="http://www.atmarkit.co.jp/ait/articles/1211/26/news012_3.html" target="_blank">WebGLの能力を引き出すプログラマブルシェーダー (3/5)</a><br />
+          <a href="http://www.arakin.dyndns.org/glsl_cartoon.php" target="_blank">GLSLシェーダによるカートゥーンレンダリング</a><br />
+          <a href="http://qiita.com/edo_m18/items/8b84e6318ee49713e40e" target="_blank">Three.jsでトゥーンシェーダ（とShaderMaterial）</a></p>
+          <p>ソースコードは<a href="https://github.com/takumi0125/toonshadingSample" target="_blank">こちら</a>。<br />
+          主な処理はすべて<br />
+          <a class="breakall" href="https://github.com/takumi0125/E-Can/blob/master/gulp/src/assets/js/index.coffee" target="_blank">https://github.com/takumi0125/E-Can/blob/master/gulp/src/assets/js/index.coffee</a><br />
+          に記述されています。</p>
+          <p>実装した頂点シェーダ・フラグメントシェーダを以下に記載します。<br />
+          Three.jsでGLSLでマテリアルを記述できる仕組み (THREE.ShaderMaterialクラス)を使用しており、GLSLの組み込み変数に加えてThree.js独自の組み込み変数も存在します。詳しくは<a href="http://www.atmarkit.co.jp/ait/articles/1211/26/news012_3.html" target="_blank">こちら</a>。</p>
+          <p>頂点シェーダ</p>
+
+          
+          
+          <p>フラグメントシェーダ</p>
+          <p>縁取りを実現する方法はいくつかあるようですが、今回は頂点シェーダで頂点の位置を頂点法線ベクトルの方向に少しだけ位置を移動し、指定の単色で塗りつぶしたたオブジェクトを、ポリゴンの裏側だけ描画することによって実現しています。<br />
+          ポリゴンの裏側だけをレンダリングするには、shaderMaterialのsideプロパティをTHREE.BackSideにセットします。</p>
+          
+          <p>同じオブジェクトを本体と縁取りの分、2回レンダリングしているのですが、2回のレンダリングは同じシェーダを使用しています。<br />
+          縁取りをレンダリングする際は、edgeという変数にtrueを渡し、edgeWidthRatioに縁取りの太さ (厳密には太さの割合)、edgeColorに縁取りの色を渡します。</p>
+          <p>頂点シェーダでは、カメラの位置と光源の位置を用いて、頂点の色を決定するための各種ベクトルを計算しています。<br />
+          視線とカメラのベクトルを接平面に変換して云々かんぬん・・・というけっこう難しい話なのですが、<a href="http://wgld.org/d/webgl/w042.html" target="_blank">こちらの記事</a>に詳しく記載されています。<br />
+          こちらのブログを執筆している方は相当賢いのではないか。。</p>
+          <p>簡単な3D表現であればCSSでも実現できますが、WebGLを使うと表現の幅が一気に広がりますね。</p>
+          
+          
+        div#disqus_thread
+          
+          
+    h2.relatedTtl
+      |Related Posts
+      
+    section.articles
+      article
+        a(href="detail.html")
+          div.thumb
+            img(src="https://dev.tkmh.me/wp/wp-content/uploads/2016/03/thumb.png")
+          h2.ttl
+            |タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル
+          p.date
+            |2016.06.20
+      article
+        a(href="#")
+          div.thumb
+            img(src="https://dev.tkmh.me/wp/wp-content/uploads/2016/03/thumb.png")
+          h2.ttl
+            |タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル
+          p.date
+            |2016.06.20
+      article
+        a(href="#")
+          div.thumb
+            img(src="https://dev.tkmh.me/wp/wp-content/uploads/2016/03/thumb.png")
+          h2.ttl
+            |タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル
+          p.date
+            |2016.06.20

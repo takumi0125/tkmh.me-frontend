@@ -1,1 +1,0 @@
-$ -> new tkmh.bookmarks.Bookmarks()

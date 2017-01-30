@@ -1,0 +1,1489 @@
+@charset "utf-8";
+
+@import "reset", "utils", "variables";
+
+
+// -------------------
+//  webfonts
+// -------------------
+
+@import "yakuhanjp";
+
+@font-face {
+  font-family: 'MODERNESANS';
+  src: url('/assets/font/modernesans.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/font/NotoSansJP/NotoSansJPRegular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/assets/font/NotoSansJP/NotoSansJPLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/assets/font/NotoSansJP/NotoSansJPBold.woff') format('woff');
+}
+
+// -------------------
+//  html, body
+// -------------------
+
+html, body {
+  width: 100%;
+  height: 100%;
+  color: $colorBlack;
+  background-color: $colorWhite;
+  font-family: MODERNESANS, 'YakuHanJP', 'NotoSansJP', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@include forSP {
+  html, body {
+    font-size: 12px;
+  }
+}
+
+.desktop *::selection {
+  background-color: $colorBlack !important;
+  color: $colorWhite !important;
+}
+
+
+// -------------------
+//  breakall
+// -------------------
+
+.breakall {
+  word-break: break-all !important;
+}
+
+
+// -------------------
+//  a
+// -------------------
+
+a {
+  color: $colorBlack;
+  text-decoration: none;
+}
+
+
+// -------------------
+//  wrapper
+// -------------------
+
+#wrapper {
+  background-color: $colorWhite;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+
+// -------------------
+//  loading
+// -------------------
+
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: opacity 0.8s linear 0.8s;
+  background-color: $colorWhite;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+
+  p {
+    transition: opacity 0.4s linear 0.8s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: loadingTxtAnim 0.6s linear alternate infinite;
+  }
+
+  &.loaded {
+    opacity: 0;
+
+    p {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes loadingTxtAnim {
+  0% { opacity: 0; }
+  1000% { opacity: 1; }
+}
+
+
+// -------------------
+//  contents
+// -------------------
+#contents {
+  width: 100%;
+  margin: 0 auto;
+  max-width: $maxWidth;
+}
+
+#contentsInner {
+  & > .contentsTtl {
+    z-index: 10;
+  }
+}
+
+// AndroidでtransitionEndが発火しないのでTweenMaxで対処
+//.contentsContainer {
+//  transition: opacity 0.2s linear 0.2s;
+//
+//  .show & {
+//    opacity: 1;
+//  }
+//
+//  .hide & {
+//    opacity: 0;
+//    transition-delay: 0s;
+//  }
+//}
+
+body:not(.index) #contents {
+  height: auto;
+}
+
+body:not(.index) #contentsInner {
+  padding: 40px 60px 80px;
+  min-height: 600px;
+
+  & > .contentsTtl {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+
+    h1 {
+      letter-spacing: 0.1em;
+      font-size: 80px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+  }
+}
+
+@include forLessThanTablet {
+  #contents {
+    max-width: 100%;
+  }
+
+  #contentsInner {
+    max-width: 100%;
+    min-height: 0 !important;
+  }
+
+  body:not(.index) #contentsInner {
+    padding: 40px 30px 80px !important;
+
+    & > .contentsTtl {
+      h1 {
+        font-size: 40px;
+      }
+
+      h2 {
+        font-size: 10px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+
+// -------------------
+//  globalHeader
+// -------------------
+
+#globalHeader {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 82px;
+  z-index: 30;
+
+  &:before {
+    @include absoluteTopLeft;
+    transition: transform 1s $easeOutExpo;
+    transform: translateY(-100%);
+    content: '';
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    height: 100%;
+  }
+
+  & > .inner {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    //max-width: $maxWidth - 80 * 2;
+    position: relative;
+    z-index: 2;
+  }
+
+  h1 {
+    transition: all 0.8s $easeOutExpo;
+    position: absolute;
+    top: 21px;
+    left: 20px;
+    width: 162px;
+    height: 39px;
+    z-index: 2;
+    transform: translateY(-100%);
+    opacity: 0;
+
+    a {
+      @include hidetxt;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .mark {
+      @include absoluteTopLeft;
+      width: 30px;
+      height: 39px;
+
+      svg {
+        @include absoluteTopCenter;
+      }
+    }
+
+    .txt {
+      position: absolute;
+      top: 0;
+      left: 41px;
+      width: 121px;
+      height: 39px;
+
+      svg {
+        @include absoluteTopLeft;
+      }
+    }
+  }
+
+  .scrolled &:before {
+    transform: translateY(0);
+  }
+}
+
+body:not(.index):not(.hiding) #globalHeader {
+  h1 {
+    z-index: 2;
+    transform: translateY(0%);
+    opacity: 1;
+  }
+
+  h2 {
+    display: none;
+  }
+}
+
+@include forLessThanTablet {
+  #globalHeader {
+    height: 54px;
+
+    & > .inner {
+      max-width: 100%;
+    }
+
+    h1 {
+      z-index: 1 !important;
+      top: 14px;
+      left: 14px;
+      width: 110px !important;
+      height: 26px !important;
+
+      .mark {
+        width: 20px !important;
+        height: 26px !important;
+      }
+
+      .txt {
+        left: 28px !important;
+        width: 80px !important;
+        height: 26px !important;
+      }
+    }
+  }
+}
+
+
+// -------------------
+//  globalNav
+// -------------------
+
+#globalNav {
+  @include nav;
+  transition: all 0.8s $easeOutExpo;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+body:not(.index):not(.hiding) #globalNav {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+
+@include forLessThanTablet {
+  #globalNav {
+    transition: transform 0.8s $easeOutExpo;
+    transform: translate(100%, 0%) !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    opacity: 1 !important;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    ul {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      text-align: center !important;
+    }
+
+    li {
+      width: 10em;
+      display: block;
+      font-size: 16px;
+      margin: 40px auto 0 !important;
+    }
+
+    li.index {
+      margin-top: 0 !important;
+    }
+
+    a {
+      display: inline;
+    }
+  }
+
+  .menuOpened #globalNav {
+    transform: translate(0%, 0%) !important;
+  }
+
+  @media only screen and (orientation:landscape){
+    #globalNav {
+      ul {
+        position: relative;
+      }
+
+      li {
+        margin: 20px auto 0 !important;
+      }
+
+      li.index {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}
+
+
+// -------------------
+//  btnMenu
+// -------------------
+
+#btnMenu {
+  display: none;
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  z-index: 30;
+
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  span.txt {
+    @include hidetxt;
+    font-size: 10px;
+  }
+
+  span {
+    @include absoluteCenterVH;
+    transition: all 0.8s $easeOutExpo;
+    background-color: $colorBlack;
+    width: 100%;
+    height: 3px;
+    display: block;
+  }
+
+  span:nth-child(1) {
+    transform: translateY(-8px);
+  }
+
+  span:nth-child(3) {
+    transform: translateY(8px);
+  }
+
+
+  .menuOpened & {
+    span:nth-child(1) {
+      transform: translateY(0) rotate(-135deg);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+    }
+
+    span:nth-child(3) {
+      transform: translateY(0) rotate(135deg);
+    }
+  }
+}
+
+@include forLessThanTablet {
+  #btnMenu {
+    display: block;
+  }
+}
+
+
+// -------------------
+//  mainVisual
+// -------------------
+
+#mainVisual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+
+  .hide & .loadingTxt {
+    animation: loadingTxtAnim 0.6s linear alternate infinite;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .loadingTxt {
+    transition: opacity 0.4s linear,
+                visibility 0.4s linear;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: 'Loading...';
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .shadow {
+    @include absoluteBottomLeft;
+    transition: box-shadow 0.4s $linear;
+    width: 100%;
+    height: 0;
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+  }
+
+  .btnScroll {
+    @include absoluteCenterH;
+    transition: opacity 0.2s $linear,
+                visibility 0.2s $linear;
+    opacity: 0;
+    visibility: hidden;
+    width: 80px;
+    height: 50px;
+    bottom: 60px;
+    z-index: 100;
+    text-align: center;
+
+    a {
+      display: block;
+      font-size: 20px;
+      width: 100%;
+      height: 100%;
+      color: $colorBlack;
+
+      &:before, &:after {
+        position: absolute;
+        content: '';
+        width: 20px;
+        height: 3px;
+        background-color: $colorBlack;
+        bottom: 4px;
+      }
+
+      &:before {
+        animation: btnScrollArrowBefore 0.6s $easeOutSine infinite;
+        transform-origin: 100% 100%;
+        transform: rotate(30deg);
+        right: 50%;
+      }
+
+      &:after {
+        animation: btnScrollArrowAfter 0.6s $easeOutSine infinite;
+        transform-origin: 0 100%;
+        transform: rotate(-30deg);
+        left: 50%;
+      }
+    }
+
+    @keyframes btnScrollArrowBefore {
+      0% { transform: translateY(-100%) rotate(30deg); }
+      20% { transform: translateY(100%) rotate(30deg); }
+      100% { transform: translateY(-100%) rotate(30deg); }
+    }
+
+    @keyframes btnScrollArrowAfter {
+      0% { transform: translateY(-100%) rotate(-30deg); }
+      20% { transform: translateY(100%) rotate(-30deg); }
+      100% { transform: translateY(-100%) rotate(-30deg); }
+    }
+
+    .scrolled & {
+      transition-delay: 0s !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+  }
+
+  &:before {
+    @include absoluteTopLeft;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.2) 180%), transparent;
+  }
+
+  &:after {
+    @include absoluteTopLeft;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: radial-gradient(circle, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 110%), transparent;
+    z-index: 2;
+  }
+}
+
+body:not(.index):not(.hiding) #mainVisual {
+  .shadow {
+    opacity: 1 !important;
+  }
+
+  .btnScroll {
+    transition-delay: 0.8s;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@include forLessThanTablet {
+  #mainVisual .shadow {
+    opacity: 0 !important;
+  }
+
+  #mainVisual .btnScroll {
+    bottom: 40px;
+    height: 40px;
+
+    a {
+      font-size: 18px;
+
+      &:before, &:after {
+        width: 16px;
+        height: 3px;
+      }
+    }
+  }
+
+  body:not(.index):not(.hiding) #mainVisual {
+    .shadow {
+      box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// -------------------
+//  mainLogo
+// -------------------
+
+.mainLogo {
+  position: relative;
+  transform-origin: center center;
+  width: 493px;
+  height: 248px;
+
+  .mark {
+    @include absoluteTopCenter;
+    width: 135px;
+    height: 175px;
+  }
+
+  .txt {
+    @include absoluteBottomCenter;
+    width: 493px;
+    height: 34px;
+
+    svg {
+      @include absoluteBottomCenter;
+    }
+  }
+}
+
+@include forLessThanTablet {
+  .mainLogo {
+    width: 240px !important;
+    height: 121px !important;
+    margin-top: -85px !important;
+    top: 50% !important;
+    bottom: auto !important;
+
+    .mark {
+      width: 66px !important;
+      height: 85px !important;
+    }
+
+    .txt {
+      width: 240px !important;
+      height: 17px !important;
+    }
+  }
+
+  @media only screen and (orientation:landscape){
+    .mainLogo {
+      margin-top: -84px !important;
+    }
+  }
+}
+
+
+// -------------------
+//  pagination
+// -------------------
+
+.pagination {
+  margin-top: 40px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: -1em;
+
+  span {
+    @include btnCommon;
+    display: inline-block;
+    letter-spacing: normal;
+    width: 40px;
+    height: 40px;
+    line-height: 45px;
+    margin: 0 6px;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  span.dot {
+    &:before, &:after {
+      display: none;
+    }
+  }
+
+  .prev a, .next a {
+    @include hidetxt;
+
+    &:before, &:after {
+      transition: background-color 0.4s $easeOutExpo;
+      background-color: $colorBlack;
+      position: absolute;
+      content: '';
+      width: 2px;
+      height: 9px;
+    }
+
+    &:before {
+      bottom: 50%;
+    }
+
+    &:after {
+      top: 50%;
+    }
+  }
+
+  .prev a {
+    &:before {
+      transform-origin: 0 100%;
+      transform: rotate(45deg);
+      left: 16px;
+    }
+
+    &:after {
+      transform-origin: 0 0;
+      transform: rotate(-45deg);
+      left: 16px;
+    }
+  }
+
+  .next a {
+    &:before {
+      transform-origin: 100% 100%;
+      transform: rotate(-45deg);
+      right: 16px;
+    }
+
+    &:after {
+      transform-origin: 100% 0;
+      transform: rotate(45deg);
+      right: 16px;
+    }
+  }
+
+  .page {
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .desktop & span:hover,
+  span.current {
+    @include btnCommonActive;
+
+    &.prev a, &.next a {
+      &:before, &:after {
+        background-color: $colorWhite;
+      }
+    }
+  }
+}
+
+@include forLessThanTablet {
+  .pagination {
+    .dot, .start, .end {
+      display: none;
+    }
+
+    .page {
+      display: block;
+    }
+  }
+}
+
+@include forSP {
+  .pagination {
+    margin-top: 20px;
+
+    span {
+      width: 30px;
+      height: 30px;
+      line-height: 33px;
+      margin: 0 1px;
+    }
+
+    .prev a, .next a {
+      &:before, &:after {
+        width: 2px;
+        height: 8px;
+      }
+    }
+
+    .prev a {
+      &:before, &:after {
+        left: 10px;
+      }
+    }
+
+    .next a {
+      &:before, &:after {
+        right: 10px;
+      }
+    }
+  }
+}
+
+
+// -------------------
+//  articles
+// -------------------
+
+.articles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  article {
+    width: 30%;
+    margin-bottom: 40px;
+    position: relative;
+    margin-right: 5%;
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .thumb {
+      width: 100%;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px $colorGray2;
+
+      canvas {
+        @include absoluteTopLeft;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .ttl {
+      font-size: 16px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      font-size: 12px;
+      color: $colorGray;
+    }
+
+    img {
+      @include absoluteTopLeft;
+      transition: opacity 0.2s linear;
+      width: 100%;
+      display: block;
+      opacity: 0;
+
+      &.loaded {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@include forTablet {
+  .articles article {
+    width: 48%;
+    margin-right: 4% !important;
+
+    &:nth-child(2n) {
+      margin-right: 0 !important;
+    }
+
+    .thumb {
+      margin-bottom: 10px;
+    }
+
+    .ttl {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .date {
+      font-size: 10px;
+    }
+  }
+}
+
+@include forSP {
+  .articles article {
+    width: 100% !important;
+    margin-right: 0 !important;
+
+    .thumb {
+      margin-bottom: 10px;
+    }
+
+    .ttl {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .date {
+      font-size: 10px;
+    }
+  }
+}
+
+
+// -------------------
+//  tags
+//  categories
+//  monthlyArchives
+// -------------------
+
+.tags, .categories, .monthlyArchives {
+  letter-spacing: -0.4em;
+
+  li {
+    @include btnCommon;
+    font-family: MODERNESANS, 'NotoSansJP', sans-serif;
+    font-size: 12px;
+    height: 24px;
+    line-height: 26px;
+    letter-spacing: 0.1em;
+    display: inline-block;
+    margin: 4px 4px 0 0;
+    background-color: $colorGray;
+
+    a {
+      padding: 0 6px;
+      color: $colorWhite;
+    }
+
+    .desktop &:hover {
+      @include btnCommonActive;
+    }
+  }
+
+  .year {
+    padding-top: 8px;
+    font-size: 10px;
+    line-height: 10px;
+    display: block;
+    text-align: center;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .month {
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    display: block;
+  }
+
+  a {
+    color: $colorGray;
+  }
+}
+
+.monthlyArchives li {
+  height: 46px;
+}
+
+@include forSP {
+  .tags, .categories, .monthlyArchives {
+    li {
+      font-size: 10px;
+    }
+
+    .month {
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+
+  .monthlyArchives li {
+    height: 42px;
+
+    a {
+      padding: 0 4px;
+    }
+  }
+}
+
+
+// -------------------
+//  serchPanel
+// -------------------
+
+#searchPanel {
+  margin-bottom: 60px;
+  padding-top: 24px;
+  position: relative;
+
+  &:after {
+    display: block;
+    background-color: $colorGray2;
+    width: auto;
+    height: 1px;
+    margin-top: 10px;
+    content: '';
+  }
+
+  .btnCategories, .btnTags, .btnMonthlyArchives, .btnKeyword {
+    @include btnCommon;
+    transition: transform 0.4s $easeOutExpo 0.2s;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    vertical-align: middle;
+    height: 24px;
+
+    a {
+      display: block;
+      padding: 0 6px 0 24px;
+      height: 100%;
+      line-height: 28px;
+      font-size: 14px;
+      position: relative;
+
+      &:before, &:after {
+        @include absoluteCenterV;
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 2px;
+        background-color: $colorBlack;
+      }
+
+      &:before {
+        transition: all 0.4s $easeOutExpo;
+        left: 4px;
+        transform: translateY(-2px) rotate(-45deg);
+        transform-origin: 7px 1px;
+      }
+
+      &:after {
+        transition: all 0.4s $easeOutExpo;
+        left: 11px;
+        transform: translateY(-2px) rotate(45deg);
+        transform-origin: 1px 1px;
+      }
+    }
+
+    &.closed {
+      a:before {
+        transform: translateY(2px) rotate(45deg);
+      }
+
+      a:after {
+        transform: translateY(2px) rotate(-45deg);
+      }
+    }
+  }
+
+
+  .btnTags {
+    left: 0;
+  }
+
+  .btnMonthlyArchives {
+    left: 90px;
+  }
+
+  .btnKeyword {
+    left: 284px;
+  }
+
+  &.hasCategories {
+    .btnCategories {
+      left: 0;
+    }
+
+    .btnTags {
+      left: 140px;
+    }
+
+    .btnMonthlyArchives {
+      left: 230px;
+    }
+
+    .btnKeyword {
+      left: 424px;
+    }
+  }
+
+  .desktop & .btnCategories:hover,
+  .desktop & .btnTags:hover,
+  .desktop & .btnMonthlyArchives:hover,
+  .desktop & .btnKeyword:hover,
+  .btnCategories:not(.closed),
+  .btnTags:not(.closed),
+  .btnMonthlyArchives:not(.closed),
+  .btnKeyword:not(.closed) {
+    @include btnCommonActive;
+
+    a:before, a:after {
+      background-color: $colorWhite;
+    }
+  }
+
+  .keyword {
+    transition: height 0.4s $easeOutExpo;
+    vertical-align: middle;
+    letter-spacing: -0.4em;
+    overflow: hidden;
+
+    form {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      display: block;
+    }
+
+    input[type="text"] {
+      -webkit-appearance: none;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 200px;
+      height: 26px;
+      border: 2px solid $colorGray;
+      border-radius: 0;
+      box-shadow: none !important;
+      outline: none !important;
+      font-family: MODERNESANS, 'YakuHanJP', 'NotoSansJP', sans-serif;
+    }
+
+    .btnSubmit {
+      @include btnCommon;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+      border-radius: 0;
+      box-shadow: none;
+      background-color: $colorGray;
+      height: 26px;
+
+      a {
+        letter-spacing: normal;
+        color: $colorWhite;
+        padding: 0 10px;
+        line-height: 28px;
+      }
+
+      .desktop &:hover {
+        @include btnCommonActive;
+      }
+    }
+  }
+
+  .categories, .tags, .monthlyArchives {
+    transition: height 0.4s $easeOutExpo;
+    overflow: hidden;
+
+    ul {
+      padding-top: 16px;
+      padding-bottom: 20px;
+    }
+  }
+
+  .categories, .tags, .monthlyArchives, .keyword {
+    &.closed {
+      height: 0 !important;
+    }
+  }
+
+
+  .detail & {
+    .btnCategories, .btnTags, .btnMonthlyArchives, .btnKeyword {
+      transition-delay: 0;
+      transform: translateX(100px);
+    }
+  }
+}
+
+@include forTablet {
+  #searchPanel {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #searchPanel {
+    margin-bottom: 40px;
+    padding-top: 0;
+
+    .btnCategories, .btnTags, .btnMonthlyArchives, .btnKeyword {
+      height: 30px;
+      position: relative;
+      top: 0;
+      left: 0 !important;
+
+      a {
+        line-height: 30px;
+      }
+    }
+
+    .keyword {
+      margin-bottom: 0;
+
+      form {
+        padding-top: 10px;
+        padding-bottom: 0;
+      }
+
+      input[type="text"] {
+        margin-bottom: 10px;
+        margin-right: 2px;
+        width: 180px;
+      }
+
+      .btnSubmit {
+        margin-bottom: 10px;
+      }
+    }
+
+    .tags, .monthlyArchives {
+      margin-bottom: 0;
+
+      ul {
+        padding-top: 6px;
+        padding-bottom: 10px;
+      }
+    }
+
+    .detail & {
+      .btnCategories, .btnTags, .btnMonthlyArchives, .btnKeyword {
+        transform: none !important;
+      }
+    }
+  }
+}
+
+
+// -------------------
+//  relatedTtl
+// -------------------
+
+.relatedTtl {
+  font-size: 24px;
+  margin: 100px 0 20px;
+}
+
+@include forLessThanTablet {
+  .relatedTtl {
+    font-size: 18px;
+    margin: 60px 0 20px;
+  }
+}
+
+
+// -------------------
+//  btnBack
+// -------------------
+
+.btnBack {
+  @include btnCommon;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 0.4s $easeOutExpo,
+              opacity 0.4s $easeOutExpo,
+              visibility 0.4s $easeOutExpo;
+  transform: translateX(10px);
+  visibility: hidden;
+  opacity: 0;
+  height: 24px;
+
+  a {
+    padding: 0 6px 0 24px;
+    line-height: 28px;
+    position: relative;
+    font-size: 14px;
+
+    &:before, &:after {
+      transition: background-color 0.4s $easeOutExpo;
+      position: absolute;
+      content: '';
+      background-color: $colorBlack;
+      width: 2px;
+      height: 8px;
+      left: 8px;
+    }
+
+    &:before {
+      transform-origin: 1px 7px;
+      transform: rotate(45deg);
+      top: 5px;
+    }
+
+    &:after {
+      transform-origin: 1px 1px;
+      transform: rotate(-45deg);
+      top: 12px;
+    }
+  }
+
+  .desktop &:hover {
+    @include btnCommonActive;
+
+    a:before, a:after {
+      background-color: $colorWhite;
+    }
+  }
+
+  .detail & {
+    transition-delay: 0.4s;
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .btnBack {
+    position: relative;
+    display: inline-block;
+    transition: margin-top 0.4s $easeOutExpo,
+                height 0.4s $easeOutExpo;
+    visibility: visible;
+    opacity: 1;
+    height: 0;
+    transform: none;
+  }
+
+  .detail .btnBack {
+    transform: none;
+    margin-top: 20px;
+    height: 24px;
+  }
+}
+
+
+// -------------------
+//  btnScrollTop
+// -------------------
+
+.btnScrollTop {
+  position: fixed;
+  transition: opacity 0.2s $linear,
+              visibility 0.2s $linear;
+  opacity: 0;
+  visibility: hidden;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  text-align: center;
+
+  a {
+    display: block;
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
+    color: $colorBlack;
+    padding: 34px 16px 16px;
+
+    &:before, &:after {
+      position: absolute;
+      content: '';
+      width: 18px;
+      height: 3px;
+      background-color: $colorBlack;
+      top: 8px;
+    }
+
+    &:before {
+      animation: btnScrollTopArrowBefore 0.6s $easeOutSine infinite;
+      transform-origin: 100% 0;
+      transform: rotate(-30deg);
+      right: 50%;
+    }
+
+    &:after {
+      animation: btnScrollTopArrowAfter 0.6s $easeOutSine infinite;
+      transform-origin: 0 0;
+      transform: rotate(30deg);
+      left: 50%;
+    }
+
+  }
+
+  body:not(.index).scrolled & {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @keyframes btnScrollTopArrowBefore {
+    0% { transform: translateY(100%) rotate(-30deg); }
+    20% { transform: translateY(-100%) rotate(-30deg); }
+    100% { transform: translateY(100%) rotate(-30deg); }
+  }
+
+  @keyframes btnScrollTopArrowAfter {
+    0% { transform: translateY(100%) rotate(30deg); }
+    20% { transform: translateY(-100%) rotate(30deg); }
+    100% { transform: translateY(100%) rotate(30deg); }
+  }
+}
+
+
+@include forLessThanTablet {
+  .btnScrollTop {
+    background-color: rgba(255, 255, 255, 0.6);
+
+    a {
+      font-size: 14px;
+      padding: 32px 12px 8px;
+
+      &:before, &:after {
+        top: 12px;
+        width: 13px;
+        height: 2px;
+      }
+    }
+  }
+}
+
+
+
+// -------------------
+//  svgDef
+// -------------------
+
+#svgDef {
+  @include absoluteTopLeft;
+  z-index: -10;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+
+  svg {
+    width: 0;
+    height: 0;
+  }
+}
+
+
+
+
+
+.wp_syntax td.line_numbers pre {
+  box-sizing: content-box;
+}

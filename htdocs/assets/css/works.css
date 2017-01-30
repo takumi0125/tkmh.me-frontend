@@ -4,6 +4,7 @@ body.works #globalNav li.works a {
 
 body.works #globalNav li.works:before, body.works #globalNav li.works:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -57,6 +58,7 @@ body.works #contentsInner .archiveTtl {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
           transform: translateY(-50%);
   z-index: 1;
 }
@@ -84,6 +86,7 @@ body.works #contentsInner .archiveTtl {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -40%);
+      -ms-transform: translate(-50%, -40%);
           transform: translate(-50%, -40%);
   line-height: 2;
   font-size: 16px;
@@ -91,11 +94,13 @@ body.works #contentsInner .archiveTtl {
 
 .articles article .detail {
   -webkit-transform: translate(-101%);
+      -ms-transform: translate(-101%);
           transform: translate(-101%);
 }
 
 .articles article .detail a {
   -webkit-transform-origin: right center;
+      -ms-transform-origin: right center;
           transform-origin: right center;
 }
 
@@ -105,6 +110,7 @@ body.works #contentsInner .archiveTtl {
 
 .desktop .articles article:hover .detail {
   -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
           transform: translate(0, 0);
 }
 

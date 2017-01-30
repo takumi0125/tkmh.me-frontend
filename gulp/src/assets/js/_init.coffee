@@ -1,9 +1,0 @@
-tkmh = window.tkmh || {}
-window.tkmh = tkmh
-tkmh.common = tkmh.common || {}
-tkmh.shader = tkmh.shader || {}
-tkmh.index = tkmh.index || {}
-tkmh.about = tkmh.about || {}
-tkmh.blog = tkmh.blog || {}
-tkmh.works = tkmh.works || {}
-tkmh.bookmarks = tkmh.bookmarks || {}

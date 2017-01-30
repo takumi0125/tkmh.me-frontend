@@ -195,8 +195,43 @@ a {
   z-index: 1000;
 }
 
+#loading p {
+  -webkit-transition: opacity 0.4s linear 0.8s;
+  transition: opacity 0.4s linear 0.8s;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-animation: loadingTxtAnim 0.6s linear alternate infinite;
+          animation: loadingTxtAnim 0.6s linear alternate infinite;
+}
+
 #loading.loaded {
   opacity: 0;
+}
+
+#loading.loaded p {
+  opacity: 0;
+}
+
+@-webkit-keyframes loadingTxtAnim {
+  0% {
+    opacity: 0;
+  }
+  1000% {
+    opacity: 1;
+  }
+}
+
+@keyframes loadingTxtAnim {
+  0% {
+    opacity: 0;
+  }
+  1000% {
+    opacity: 1;
+  }
 }
 
 #contents {
@@ -224,6 +259,7 @@ body:not(.index) #contentsInner > .contentsTtl {
   left: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
           transform: translateY(-50%);
   text-align: center;
 }
@@ -278,6 +314,7 @@ body:not(.index) #contentsInner > .contentsTtl h2 {
   transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
   transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), -webkit-transform 1s cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   content: '';
   background-color: rgba(255, 255, 255, 0.9);
@@ -303,6 +340,7 @@ body:not(.index) #contentsInner > .contentsTtl h2 {
   height: 39px;
   z-index: 2;
   -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   opacity: 0;
 }
@@ -350,12 +388,14 @@ body:not(.index) #contentsInner > .contentsTtl h2 {
 
 .scrolled #globalHeader:before {
   -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
           transform: translateY(0);
 }
 
 body:not(.index):not(.hiding) #globalHeader h1 {
   z-index: 2;
   -webkit-transform: translateY(0%);
+      -ms-transform: translateY(0%);
           transform: translateY(0%);
   opacity: 1;
 }
@@ -398,6 +438,7 @@ body:not(.index):not(.hiding) #globalHeader h2 {
   -webkit-transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   opacity: 0;
 }
@@ -443,11 +484,13 @@ body:not(.index):not(.hiding) #globalHeader h2 {
 
 #globalNav li:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 #globalNav li:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -461,6 +504,7 @@ body:not(.index):not(.hiding) #globalHeader h2 {
 
 .desktop #globalNav li:hover:before, .desktop #globalNav li:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -471,6 +515,7 @@ body:not(.index):not(.hiding) #globalHeader h2 {
 
 body:not(.index):not(.hiding) #globalNav {
   -webkit-transform: translateY(0%);
+      -ms-transform: translateY(0%);
           transform: translateY(0%);
   opacity: 1;
 }
@@ -482,6 +527,7 @@ body:not(.index):not(.hiding) #globalNav {
     transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     -webkit-transform: translate(100%, 0%) !important;
+        -ms-transform: translate(100%, 0%) !important;
             transform: translate(100%, 0%) !important;
     position: fixed;
     width: 100%;
@@ -497,6 +543,7 @@ body:not(.index):not(.hiding) #globalNav {
     position: absolute;
     top: 50%;
     -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
             transform: translateY(-50%);
     width: 100%;
     text-align: center !important;
@@ -515,6 +562,7 @@ body:not(.index):not(.hiding) #globalNav {
   }
   .menuOpened #globalNav {
     -webkit-transform: translate(0%, 0%) !important;
+        -ms-transform: translate(0%, 0%) !important;
             transform: translate(0%, 0%) !important;
   }
 }
@@ -572,16 +620,19 @@ body:not(.index):not(.hiding) #globalNav {
 
 #btnMenu span:nth-child(1) {
   -webkit-transform: translateY(-8px);
+      -ms-transform: translateY(-8px);
           transform: translateY(-8px);
 }
 
 #btnMenu span:nth-child(3) {
   -webkit-transform: translateY(8px);
+      -ms-transform: translateY(8px);
           transform: translateY(8px);
 }
 
 .menuOpened #btnMenu span:nth-child(1) {
   -webkit-transform: translateY(0) rotate(-135deg);
+      -ms-transform: translateY(0) rotate(-135deg);
           transform: translateY(0) rotate(-135deg);
 }
 
@@ -591,6 +642,7 @@ body:not(.index):not(.hiding) #globalNav {
 
 .menuOpened #btnMenu span:nth-child(3) {
   -webkit-transform: translateY(0) rotate(135deg);
+      -ms-transform: translateY(0) rotate(135deg);
           transform: translateY(0) rotate(135deg);
 }
 
@@ -606,6 +658,28 @@ body:not(.index):not(.hiding) #globalNav {
   height: 100%;
   overflow: hidden;
   z-index: 1;
+}
+
+.hide #mainVisual .loadingTxt {
+  -webkit-animation: loadingTxtAnim 0.6s linear alternate infinite;
+          animation: loadingTxtAnim 0.6s linear alternate infinite;
+  opacity: 1;
+  visibility: visible;
+}
+
+#mainVisual .loadingTxt {
+  -webkit-transition: opacity 0.4s linear, visibility 0.4s linear;
+  transition: opacity 0.4s linear, visibility 0.4s linear;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  content: 'Loading...';
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
 }
 
 #mainVisual canvas {
@@ -665,8 +739,10 @@ body:not(.index):not(.hiding) #globalNav {
   -webkit-animation: btnScrollArrowBefore 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
           animation: btnScrollArrowBefore 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
   -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
           transform-origin: 100% 100%;
   -webkit-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
           transform: rotate(30deg);
   right: 50%;
 }
@@ -675,8 +751,10 @@ body:not(.index):not(.hiding) #globalNav {
   -webkit-animation: btnScrollArrowAfter 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
           animation: btnScrollArrowAfter 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
   -webkit-transform-origin: 0 100%;
+      -ms-transform-origin: 0 100%;
           transform-origin: 0 100%;
   -webkit-transform: rotate(-30deg);
+      -ms-transform: rotate(-30deg);
           transform: rotate(-30deg);
   left: 50%;
 }
@@ -805,6 +883,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 .mainLogo {
   position: relative;
   -webkit-transform-origin: center center;
+      -ms-transform-origin: center center;
           transform-origin: center center;
   width: 493px;
   height: 248px;
@@ -912,11 +991,13 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .pagination span:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 .pagination span:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -951,32 +1032,40 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .pagination .prev a:before {
   -webkit-transform-origin: 0 100%;
+      -ms-transform-origin: 0 100%;
           transform-origin: 0 100%;
   -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
           transform: rotate(45deg);
   left: 16px;
 }
 
 .pagination .prev a:after {
   -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
           transform: rotate(-45deg);
   left: 16px;
 }
 
 .pagination .next a:before {
   -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
           transform-origin: 100% 100%;
   -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
           transform: rotate(-45deg);
   right: 16px;
 }
 
 .pagination .next a:after {
   -webkit-transform-origin: 100% 0;
+      -ms-transform-origin: 100% 0;
           transform-origin: 100% 0;
   -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
           transform: rotate(45deg);
   right: 16px;
 }
@@ -997,6 +1086,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 .pagination span.current:before,
 .pagination span.current:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -1041,15 +1131,19 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .articles {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
   -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
@@ -1194,11 +1288,13 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .tags li:before, .categories li:before, .monthlyArchives li:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 .tags li:after, .categories li:after, .monthlyArchives li:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -1213,6 +1309,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .desktop .tags li:hover:before, .desktop .tags li:hover:after, .desktop .categories li:hover:before, .desktop .categories li:hover:after, .desktop .monthlyArchives li:hover:before, .desktop .monthlyArchives li:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -1314,11 +1411,13 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 #searchPanel .btnCategories:before, #searchPanel .btnTags:before, #searchPanel .btnMonthlyArchives:before, #searchPanel .btnKeyword:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 #searchPanel .btnCategories:after, #searchPanel .btnTags:after, #searchPanel .btnMonthlyArchives:after, #searchPanel .btnKeyword:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -1349,8 +1448,10 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   left: 4px;
   -webkit-transform: translateY(-2px) rotate(-45deg);
+      -ms-transform: translateY(-2px) rotate(-45deg);
           transform: translateY(-2px) rotate(-45deg);
   -webkit-transform-origin: 7px 1px;
+      -ms-transform-origin: 7px 1px;
           transform-origin: 7px 1px;
 }
 
@@ -1359,18 +1460,22 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   left: 11px;
   -webkit-transform: translateY(-2px) rotate(45deg);
+      -ms-transform: translateY(-2px) rotate(45deg);
           transform: translateY(-2px) rotate(45deg);
   -webkit-transform-origin: 1px 1px;
+      -ms-transform-origin: 1px 1px;
           transform-origin: 1px 1px;
 }
 
 #searchPanel .btnCategories.closed a:before, #searchPanel .btnTags.closed a:before, #searchPanel .btnMonthlyArchives.closed a:before, #searchPanel .btnKeyword.closed a:before {
   -webkit-transform: translateY(2px) rotate(45deg);
+      -ms-transform: translateY(2px) rotate(45deg);
           transform: translateY(2px) rotate(45deg);
 }
 
 #searchPanel .btnCategories.closed a:after, #searchPanel .btnTags.closed a:after, #searchPanel .btnMonthlyArchives.closed a:after, #searchPanel .btnKeyword.closed a:after {
   -webkit-transform: translateY(2px) rotate(-45deg);
+      -ms-transform: translateY(2px) rotate(-45deg);
           transform: translateY(2px) rotate(-45deg);
 }
 
@@ -1429,6 +1534,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 #searchPanel .btnKeyword:not(.closed):before,
 #searchPanel .btnKeyword:not(.closed):after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -1517,11 +1623,13 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 #searchPanel .keyword .btnSubmit:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 #searchPanel .keyword .btnSubmit:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -1538,6 +1646,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .desktop #searchPanel .keyword .btnSubmit:hover:before, .desktop #searchPanel .keyword .btnSubmit:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -1560,6 +1669,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   -webkit-transition-delay: 0;
           transition-delay: 0;
   -webkit-transform: translateX(100px);
+      -ms-transform: translateX(100px);
           transform: translateX(100px);
 }
 
@@ -1607,6 +1717,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   }
   .detail #searchPanel .btnCategories, .detail #searchPanel .btnTags, .detail #searchPanel .btnMonthlyArchives, .detail #searchPanel .btnKeyword {
     -webkit-transform: none !important;
+        -ms-transform: none !important;
             transform: none !important;
   }
 }
@@ -1634,6 +1745,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1), visibility 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1), visibility 0.4s cubic-bezier(0.19, 1, 0.22, 1), -webkit-transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transform: translateX(10px);
+      -ms-transform: translateX(10px);
           transform: translateX(10px);
   visibility: hidden;
   opacity: 0;
@@ -1667,11 +1779,13 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .btnBack:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 .btnBack:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -1695,16 +1809,20 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .btnBack a:before {
   -webkit-transform-origin: 1px 7px;
+      -ms-transform-origin: 1px 7px;
           transform-origin: 1px 7px;
   -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
           transform: rotate(45deg);
   top: 5px;
 }
 
 .btnBack a:after {
   -webkit-transform-origin: 1px 1px;
+      -ms-transform-origin: 1px 1px;
           transform-origin: 1px 1px;
   -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
           transform: rotate(-45deg);
   top: 12px;
 }
@@ -1715,6 +1833,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
 
 .desktop .btnBack:hover:before, .desktop .btnBack:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -1726,6 +1845,7 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   -webkit-transition-delay: 0.4s;
           transition-delay: 0.4s;
   -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
           transform: translateX(0);
   opacity: 1;
   visibility: visible;
@@ -1741,10 +1861,12 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
     opacity: 1;
     height: 0;
     -webkit-transform: none;
+        -ms-transform: none;
             transform: none;
   }
   .detail .btnBack {
     -webkit-transform: none;
+        -ms-transform: none;
             transform: none;
     margin-top: 20px;
     height: 24px;
@@ -1785,8 +1907,10 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   -webkit-animation: btnScrollTopArrowBefore 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
           animation: btnScrollTopArrowBefore 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
   -webkit-transform-origin: 100% 0;
+      -ms-transform-origin: 100% 0;
           transform-origin: 100% 0;
   -webkit-transform: rotate(-30deg);
+      -ms-transform: rotate(-30deg);
           transform: rotate(-30deg);
   right: 50%;
 }
@@ -1795,8 +1919,10 @@ body:not(.index):not(.hiding) #mainVisual .btnScroll {
   -webkit-animation: btnScrollTopArrowAfter 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
           animation: btnScrollTopArrowAfter 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
   -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   -webkit-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
           transform: rotate(30deg);
   left: 50%;
 }

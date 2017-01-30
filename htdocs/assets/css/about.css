@@ -10,6 +10,7 @@ body.about #globalNav li.about a {
 
 body.about #globalNav li.about:before, body.about #globalNav li.about:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -148,11 +149,13 @@ body.about #globalNav li.about:before, body.about #globalNav li.about:after {
 
 .sns li:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 .sns li:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -176,6 +179,7 @@ body.about #globalNav li.about:before, body.about #globalNav li.about:after {
 
 .desktop .sns li:hover:before, .desktop .sns li:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -244,11 +248,13 @@ body.about #globalNav li.about:before, body.about #globalNav li.about:after {
 
 .email:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 .email:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -263,6 +269,7 @@ body.about #globalNav li.about:before, body.about #globalNav li.about:after {
 
 .desktop .email:hover:before, .desktop .email:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 

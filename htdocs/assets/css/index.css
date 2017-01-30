@@ -4,6 +4,7 @@ body.index #globalNav li.index a {
 
 body.index #globalNav li.index:before, body.index #globalNav li.index:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -52,6 +53,7 @@ body.index #globalNav li.index:before, body.index #globalNav li.index:after {
   transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transform: translateY(80%);
+      -ms-transform: translateY(80%);
           transform: translateY(80%);
 }
 
@@ -96,11 +98,13 @@ body.index #globalNav li.index:before, body.index #globalNav li.index:after {
 
 #topGlobalNav li:before {
   -webkit-transform: translateX(104%);
+      -ms-transform: translateX(104%);
           transform: translateX(104%);
 }
 
 #topGlobalNav li:after {
   -webkit-transform: translateX(-104%);
+      -ms-transform: translateX(-104%);
           transform: translateX(-104%);
 }
 
@@ -114,6 +118,7 @@ body.index #globalNav li.index:before, body.index #globalNav li.index:after {
 
 .desktop #topGlobalNav li:hover:before, .desktop #topGlobalNav li:hover:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -132,11 +137,13 @@ body.index #globalNav li.index:before, body.index #globalNav li.index:after {
 
 .show #topGlobalNav {
   -webkit-transform: translateY(0%);
+      -ms-transform: translateY(0%);
           transform: translateY(0%);
 }
 
 .hide #topGlobalNav {
   -webkit-transform: translateY(80%);
+      -ms-transform: translateY(80%);
           transform: translateY(80%);
 }
 

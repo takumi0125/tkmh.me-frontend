@@ -4,6 +4,7 @@ body.bookmarks #globalNav li.bookmarks a {
 
 body.bookmarks #globalNav li.bookmarks:before, body.bookmarks #globalNav li.bookmarks:after {
   -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 
@@ -88,6 +89,7 @@ html:not(.desktop) .articles article .thumb .link {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -40%);
+      -ms-transform: translate(-50%, -40%);
           transform: translate(-50%, -40%);
   line-height: 2;
   font-size: 16px;
@@ -95,22 +97,26 @@ html:not(.desktop) .articles article .thumb .link {
 
 .desktop .articles article .thumb .detail {
   -webkit-transform: translate(-101%);
+      -ms-transform: translate(-101%);
           transform: translate(-101%);
 }
 
 .desktop .articles article .thumb .detail a {
   -webkit-transform-origin: right center;
+      -ms-transform-origin: right center;
           transform-origin: right center;
 }
 
 .desktop .articles article .thumb .link {
   -webkit-transform: translate(101%);
+      -ms-transform: translate(101%);
           transform: translate(101%);
   top: 50%;
 }
 
 .desktop .articles article .thumb .link a {
   -webkit-transform-origin: left center;
+      -ms-transform-origin: left center;
           transform-origin: left center;
 }
 
@@ -120,6 +126,7 @@ html:not(.desktop) .articles article .thumb .link {
 
 .desktop .articles article .thumb:hover .detail, .desktop .articles article .thumb:hover .link {
   -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
           transform: translate(0, 0);
 }
 
