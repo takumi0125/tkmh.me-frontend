@@ -1,4 +1,3 @@
-utils = require '../_utils/utils'
 TakumiGeometry = require './TakumiGeometry'
 
 class TakumiObject3D extends THREE.Object3D
@@ -44,7 +43,6 @@ class TakumiObject3D extends THREE.Object3D
       # 縦長
       ttlScale = height / 20000
 
-    # if utils.isMobile then ttlScale *= 2
     @material.uniforms.ttlScale.value = ttlScale
     return
 

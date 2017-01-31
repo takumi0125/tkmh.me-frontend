@@ -1,4 +1,3 @@
-utils = require '../_utils/utils'
 Contents = require '../_common/Contents'
 
 class Works extends Contents

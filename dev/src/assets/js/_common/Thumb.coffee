@@ -1,5 +1,3 @@
-utils = require '../_utils/utils'
-
 class Thumb
   _GEOMETRY_SIZE = 100
 
@@ -63,7 +61,6 @@ class Thumb
       uniforms:
         animationParam: { type: '1f', value: 0 }
         texture: { type: 't' }
-
 
     @mesh = new THREE.Mesh @geometry, @material
     @scene.add @mesh
@@ -133,6 +130,5 @@ class Thumb
 
     @renderer.setSize @width, @height
     return
-
 
 module.exports = Thumb

@@ -1,4 +1,3 @@
-utils = require '../_utils/utils'
 Thumb = require './Thumb'
 
 class Contents
@@ -43,7 +42,7 @@ class Contents
     self = @
     @thumbs = []
     @$contentsInner.find(selector).each (index, img)->
-      thumb = new tkmh.Thumb $(@), widthSegments, heightSegments
+      thumb = new Thumb $(@), widthSegments, heightSegments
       self.thumbs.push thumb
       thumb.init()
 

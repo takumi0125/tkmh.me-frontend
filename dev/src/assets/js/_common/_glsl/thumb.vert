@@ -14,7 +14,7 @@ varying vec2 vUv;
 
 float getAnimationParam(float animationParam, float randomValue) {
   float p = clamp(-map(randomValue, -1.0, 1.0, 0.0, 0.5, true) + animationParam * 1.6, 0.0, 1.0);
-  p = easeInOutExpo(p, 0.0, 1.0, 1.0);
+  p = easeInOutExpo(p);
   return p;
 }
 

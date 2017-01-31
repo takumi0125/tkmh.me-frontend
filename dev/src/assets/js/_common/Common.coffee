@@ -1,4 +1,4 @@
-utils = require '../_utils/utils'
+window.utils = require '../_utils/utils'
 MainVisual = require './MainVisual'
 
 class Common

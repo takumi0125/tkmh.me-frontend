@@ -1,4 +1,3 @@
-utils = require '../_utils/utils'
 TakumiObject3D = require './TakumiObject3D'
 
 class MainVisual
