@@ -134,11 +134,16 @@ class Common
 
   resize: ->
     @mainVisualHeight = @$window.height()
+    mainVisualWidth = @$window.width()
     @headerHeight = @$globalHeader.height()
 
+    @$wrapper.css
+      width: ''
+      height: @mainVisualHeight
+
     @mainVisual?.resize(
-      @$window.width()
-      @mainVisualHeight - 1
+      mainVisualWidth
+      @mainVisualHeight
     )
 
     return
@@ -152,13 +157,17 @@ class Common
 
   # orientation chnage
   orientationChangeHandler: (e)=>
-    if utils.isTablet or utils.isMobile then @resize()
+    if utils.isTablet or utils.isMobile
+      if utils.isiOS
+        @resize()
+      else
+        setTimeout (=> @resize()), 300
     return
 
   # scroll
   windowScrollHandler: (e)=>
     @scrollTop = @$window.scrollTop()
-    if @scrollTop >= @mainVisualHeight - @headerHeight
+    if @scrollTop >= @mainVisualHeight - @headerHeight - 1
       @$body.addClass 'scrolled'
     else
       @$body.removeClass 'scrolled'

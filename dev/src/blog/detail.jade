@@ -23,21 +23,21 @@ block contents
       |Blog
     h2
       |Development and information etc...
-    
+
   +searchPanel(true)
-  
+
   div.inner
     article.main
       h1.ttl
         |ブログのタイトル
-        
+
       p.date
         |2016.06.21
-        
+
       section.category
         h2.ttl
           |Category
-          
+
         div.categories
           ul
             li
@@ -55,7 +55,7 @@ block contents
       section.tag
         h2.ttl
           |Tags
-          
+
         div.tags
           ul
             li
@@ -70,85 +70,439 @@ block contents
             li
               a(href="#")
                 |tagtag (10)
-          
+
       div.inner
         div.body.
-          <pre>
-          <code class="coffeescript">
-            # mouse move (touch move)
-            mouseMoveHandler: (clientX, clientY)=>
-              intersects = @getRaycasterIntersects clientX, clientY
+          <p>さていよいよ最終回です。<a href="https://tkmh.me/blog/2016/12/06/578/">前回 (Vol.2 Geometry編)</a>は主にBufferGeometryのお話でした。</p>
+          <p>・<a href="https://tkmh.me/blog/2016/12/05/555/">Vol.1 (準備編)</a><br />
+          ・<a href="https://tkmh.me/blog/2016/12/06/578/">Vol.2 (Geometry編)</a><br />
+          ・Vol.3 (シェーダ編)</p>
+          <p>やっとここからシェーダの話になります。シェーダのプログラムはHTMLファイルに記述されています。</p>
+          <p>まずはコード量の少ないフラグメントシェーダを見てみましょう。</p>
+          <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 1em; margin-top: 2em;">フラグメントシェーダ</h2>
+          <p><code></p>
+          <pre class="glsl">
+          precision mediump float;
 
-              # 交差しているMeshがあれば、intersectsの配列に格納される
-              if intersects.length > 0
-                intersect = intersects[0]
-                color = @sphereGeometry.faces[intersect.faceIndex].color
-                TweenMax.killTweensOf color
-                TweenMax.to color, 0.2, { r: Math.random() * 6, g: Math.random() * 6, b: Math.random() * 6, ease: Sine.easeOut, onUpdate: => @sphereGeometry.colorsNeedUpdate = true }
-                TweenMax.to color, 0.6, { r: 1, g: 1, b: 1, ease: Sine.easeInOut, delay: 0.2, onUpdate: => @sphereGeometry.colorsNeedUpdate = true }
-          </code>
+          uniform sampler2D txtTexture;  // テクスチャ
+
+          varying vec4 vColor;  // 文字色
+          varying vec2 vUv;     // UV座標
+
+          // メインの処理
+          void main(){
+          vec4 color = texture2D(txtTexture, vUv) * vColor;
+          if(color.a == 0.0) {
+          discard;
+          } else {
+          gl_FragColor = color;
+          }
+          }
+
           </pre>
-          
-          
-          <p>3Dの表現のなかで割りと好きなトゥーンシェーディングを<a href="http://threejs.org/">Three.js</a>で実装してみました。</p>
-          <p class="img"><a href="http://dev.tkmh.me/study/toonshadingSample/" target="_blank"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/main2.png" alt="main" class="alignnone size-full wp-image-292" /></a></p>
-          <p><a href="http://dev.tkmh.me/study/toonshadingSample/" target="_blank">DEMO</a></p>
-          <p>トゥーンシェーディングの主な特徴は</p>
-          <p>・エッジがはっきりと縁取られている<br />
-          ・陰影がはっきりしている</p>
-          <p>です。アニメっぽい表現のシェーディングです。アニメキャラが登場するゲームでよく使われる手法です。</p>
-          <p>最近だと以下のミュージックビデオコンテンツもWebGLのトゥーンシェーディングっぽい表現で作られていました。</p>
-          <p><a href="http://www.dennis.video/" target="_blank">http://www.dennis.video/</a></p>
-          <p>今回のデモは、缶の3Dモデル(objファイル)をThree.jsで読み込み、テクスチャを適用して表示しています。</p>
-          <p>3Dデータは以下のサイトでフリーのものをダウンロードしました。</p>
-          <p>3D Models, Download 3D Models at TurboSquid<br />
-          <a class="breakall" href="http://www.turbosquid.com/Search/3D-Models/free" target="_blank">http://www.turbosquid.com/Search/3D-Models/free</a></p>
-          <p>ダウンロードしたデータを<a href="https://www.blender.org/" target="_blank">blender</a>でインポートし、テクスチャをつくるためにUV展開図なるものを生成しました。</p>
-          <p class="img"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase.png" alt="textureBase" class="alignnone size-full wp-image-323" srcset="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase-150x150.png 150w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase-300x300.png 300w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/textureBase.png 1024w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
-          <p>要は缶の展開図なのですが、この形に合わせてテクスチャを作れば、3Dモデルに綺麗に貼り付けてくれます。<br />
-          このUV展開図に合わせてつくったテクスチャが以下のものです。側面と上の方を青くしたいだけなので、その部分を青で塗りつぶし、それ以外の領域はグレーにしています。雑です。</p>
-          <p class="img"><img src="http://dev.tkmh.me/study/toonshadingSample/assets/img/texture.png" alt="texture" class="alignnone size-full" /></p>
-          <p>実際は以下の画像はテクスチャとして使用していませんが、UV展開図とテクスチャを重ねると、どの部分を青くしてるのかわかりやすいかと思います。</p>
-          <p class="img"><img src="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2.png" alt="texture2" class="alignnone size-full wp-image-332" srcset="http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2-150x150.png 150w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2-300x300.png 300w, http://dev.tkmh.me/wp/wp-content/uploads/2015/09/texture2.png 1024w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
-          <p>トゥーンシェーディングに加え、金属光沢を再現するために、3D空間上の点光源が反射しているような表現と、凹凸感を表現をするためのバンプマップ(法線マップ)という手法をGLSLで実装しています。<br />
-          バンプマップ用の法線マップ画像はなんとphotoshopのフィルタ機能で作ることができました。楽ちん。</p>
-          <p class="img"><img src="http://dev.tkmh.me/study/toonshadingSample/assets/img/normalMap.png" alt="texture" class="alignnone size-full" /></p>
-          <p>この画像を使用して、GLSLでゴニョゴニョっとやってあげるだけで、凹凸感を実現できます。缶側面のgithubのロゴの部分がへこんだように見えるかと思いますが、これは3Dモデルが実際にへこんだ形になっているのではなく、擬似的にそう見えるように計算して表示させる技法です。</p>
-          <p>※上記の表現技法の実装は正直手前実装は難しいので、以下の記事を参考にしています。<br />
-          <a href="http://wgld.org/d/webgl/w048.html" target="_blank">wgld.org | WebGL: トゥーンレンダリング |</a><br />
-          <a href="http://wgld.org/d/webgl/w023.html" target="_blank">wgld.org | WebGL: 反射光によるライティング |</a><br />
-          <a href="http://wgld.org/d/webgl/w042.html" target="_blank">wgld.org | WebGL: バンプマッピング |</a><br />
-          <a href="http://www.atmarkit.co.jp/ait/articles/1211/26/news012_3.html" target="_blank">WebGLの能力を引き出すプログラマブルシェーダー (3/5)</a><br />
-          <a href="http://www.arakin.dyndns.org/glsl_cartoon.php" target="_blank">GLSLシェーダによるカートゥーンレンダリング</a><br />
-          <a href="http://qiita.com/edo_m18/items/8b84e6318ee49713e40e" target="_blank">Three.jsでトゥーンシェーダ（とShaderMaterial）</a></p>
-          <p>ソースコードは<a href="https://github.com/takumi0125/toonshadingSample" target="_blank">こちら</a>。<br />
-          主な処理はすべて<br />
-          <a class="breakall" href="https://github.com/takumi0125/E-Can/blob/master/gulp/src/assets/js/index.coffee" target="_blank">https://github.com/takumi0125/E-Can/blob/master/gulp/src/assets/js/index.coffee</a><br />
-          に記述されています。</p>
-          <p>実装した頂点シェーダ・フラグメントシェーダを以下に記載します。<br />
-          Three.jsでGLSLでマテリアルを記述できる仕組み (THREE.ShaderMaterialクラス)を使用しており、GLSLの組み込み変数に加えてThree.js独自の組み込み変数も存在します。詳しくは<a href="http://www.atmarkit.co.jp/ait/articles/1211/26/news012_3.html" target="_blank">こちら</a>。</p>
-          <p>頂点シェーダ</p>
+          <p></code></p>
+          <p>1行目のprecision宣言に関しては、何度も言いますが<a href="https://wgld.org/d/webgl/w070.html" target="_blank">wgld.org</a>をご覧ください。</p>
+          <p>txtTextureはテクスチャです。複数の文字がグリッド状に並べられたものです。RawShaderMaterialのuniformsプロパティに設定したかと思います。</p>
+          <p class="img"><img src="https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img6.png" alt="img6" class="alignnone size-full wp-image-607" srcset="https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img6.png 2057w, https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img6-300x76.png 300w, https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img6-768x193.png 768w, https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img6-1024x258.png 1024w" sizes="(max-width: 2057px) 100vw, 2057px" /></p>
+          <p>これです。これが渡されてきます。</p>
+          <p><code></p>
+          <pre class="glsl">
+          varying vec4 vColor;  // 文字色
+          varying vec2 vUv;     // UV座標
+          </pre>
+          <p></code></p>
+          <p>これらは、頂点シェーダから渡される値です。頂点シェーダの解説の際にどんなデータが入ってくるか解説します。ひとまずコメントの通り、文字色とUV座標が入ってくると思ってください。</p>
+          <p>そしてmain関数がメインの処理です。フラグメントシェーダはこの関数内でgl_FragColorに代入された値が描画されます。</p>
+          <p><code></p>
+          <pre class="glsl">
+          vec4 color = texture2D(txtTexture, vUv) * vColor;
+          </pre>
+          <p></code></p>
+          <p>この一行は何をしているかというと、テクスチャからUV座標に該当する部分の色を取ってきたものと、vColor (文字色)を乗算しています。</p>
+          <p>文字のテクスチャは、文字部分は白、それ以外の部分透明なテクスチャです。(上のテクスチャの画像は透明部分をわかりやすいように黒くしているだけです。)</p>
+          <p>この乗算は文字の部分だけをvColorにしてくれます。</p>
+          <p>ここで、すぐ</p>
+          <p><code></p>
+          <pre class="glsl">
+          gl_FragColor = color;
+          </pre>
+          <p></code></p>
+          <p>としてしまってもいいんですが、これだと透明な部分も描画されてしまいます。</p>
+          <p class="img"><img src="https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img7.png" alt="img7" class="alignnone size-full wp-image-617" srcset="https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img7.png 800w, https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img7-300x150.png 300w, https://tkmh.me/blog/wp/wp-content/uploads/2016/12/img7-768x384.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></p>
+          <p>どういうことかというと、このように、色はないけど矩形の後ろは描画できないという現象が起こってしまいます。<br />
+          なので、色が透明な部分はそもそも描画しない、という処理を入れてます。</p>
+          <p>それが以下の部分です。</p>
+          <p><code></p>
+          <pre class="glsl">
+          if(color.a == 0.0) {
+          discard;
+          } else {
+          gl_FragColor = color;
+          }
+          </pre>
+          <p></code></p>
+          <p>計算した色のa成分が0の場合はdiscard;という部分に差し掛かり、discardの場合はフラグメントシェーダはなにも描画しないことになります。</p>
+          <p>そうすると、矩形内でも透明部分は描画されないので、不自然に他のオブジェクトが切り取られることがなくなります。</p>
+          <p>続いて頂点シェーダです。フラグメントシェーダに比べてコード量が多いですが、順に見ていけば大して難しいことはしていないです。</p>
+          <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 1em; margin-top: 2em;">頂点シェーダ</h2>
+          <p>頂点シェーダは長いので、小分けにしてみていきます。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em; line-height: 1.4;">・three.jsが予め定義してるuniform変数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // three.jsが予め定義してるuniform変数
+          uniform mat4 modelMatrix;  // モデル変換行列
+          uniform mat4 viewMatrix;  // ビュー変換行列
+          uniform mat4 projectionMatrix;  // プロジェクション変換行列
+          uniform vec3 cameraPosition;  // カメラの位置
+          </pre>
+          <p></code></p>
+          <p>まずは各種変数の宣言部分です。上記のものはthree.jsが勝手にシェーダに渡してくれているuniform変数です。なので、RawShaderMaterilのuniformsには定義していません。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em; line-height: 1.4;">・自分で定義したuniform変数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // 自分で定義したuniform変数
+          uniform float time;  // 経過時間
+          uniform float numChars;  // 文字数 (正方形の数)
+          uniform float numTextureGridRows;  // テクスチャの横方向の文字数
+          uniform float numTextureGridCols;  // テクスチャの縦方向の文字数
+          uniform float textureTxtLength;  // テクスチャに使っている文字の数
+          uniform float animationValue1;  // アニメーション適用度1
+          uniform float animationValue2;  // アニメーション適用度2
+          uniform float animationValue3;  // アニメーション適用度3
+          </pre>
+          <p></code></p>
+          <p>これらはRawShaderMaterialのuniformsに自分で設定したかと思います。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・attribute</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // FloatingCharsGeometryで追加したattribute
+          attribute vec3 position;  // 座標
+          attribute vec3 randomValues;  // ランダム値
+          attribute vec2 uv;  //UV座標
+          attribute float charIndex;  // 何番目の文字(正方形に)属するか
+          </pre>
+          <p></code></p>
+          <p>これらはFloatingCharsGeometryで追加したattributeです。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・varying</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // フラグメントシェーダに渡す値
+          varying vec4 vColor;  // 文字色
+          varying vec2 vUv;  // UV座標
+          </pre>
+          <p></code></p>
+          <p>これらはフラグメントシェーダに渡す値です。頂点ごとにこの変数に代入すると、値を補間してフラグメントシェーダに渡してくれます。</p>
+          <p>値を補間？って思う方もいるかと思いますが、頂点ごとに実行される頂点シェーダに対し、フラグメントシェーダは、頂点で囲まれた面の全てのピクセルに対して実行されます。</p>
+          <p>そこでvarying修飾子を付けた変数に値を入れてフラグメントシェーダに渡すと、勝手に頂点間のピクセルに対する値に補間してくれます。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・定数PI</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // 定数としてPIを定義
+          const float PI = 3.1415926535897932384626433832795;
+          </pre>
+          <p></code></p>
+          <p>GLSLではPIが定義されていないので、自分で定数として定義しておきます。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・rotateVec3関数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // 3次元ベクトルを任意の軸で回転
+          vec3 rotateVec3(vec3 p, float angle, vec3 axis){
+          vec3 a = normalize(axis);
+          float s = sin(angle);
+          float c = cos(angle);
+          float r = 1.0 - c;
+          mat3 m = mat3(
+          a.x * a.x * r + c,
+          a.y * a.x * r + a.z * s,
+          a.z * a.x * r - a.y * s,
+          a.x * a.y * r - a.z * s,
+          a.y * a.y * r + c,
+          a.z * a.y * r + a.x * s,
+          a.x * a.z * r + a.y * s,
+          a.y * a.z * r - a.x * s,
+          a.z * a.z * r + c
+          );
+          return m * p;
+          }
+          </pre>
+          <p></code></p>
+          <p>rotateVec3はその名の通り、3次元ベクトルを任意の軸で回転させる関数です。</p>
+          <p>第一引数に頂点座標、第二引数に角度 (ラジアン)、第三引数に軸のベクトルを指定します。正方形を回転させるために使用します。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・map関数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // 範囲を設定し直す
+          float map(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp) {
+          if(clamp == true) {
+          if(value < inputMin) return outputMin;
+          if(value > inputMax) return outputMax;
+          }
 
-          
-          
-          <p>フラグメントシェーダ</p>
-          <p>縁取りを実現する方法はいくつかあるようですが、今回は頂点シェーダで頂点の位置を頂点法線ベクトルの方向に少しだけ位置を移動し、指定の単色で塗りつぶしたたオブジェクトを、ポリゴンの裏側だけ描画することによって実現しています。<br />
-          ポリゴンの裏側だけをレンダリングするには、shaderMaterialのsideプロパティをTHREE.BackSideにセットします。</p>
-          
-          <p>同じオブジェクトを本体と縁取りの分、2回レンダリングしているのですが、2回のレンダリングは同じシェーダを使用しています。<br />
-          縁取りをレンダリングする際は、edgeという変数にtrueを渡し、edgeWidthRatioに縁取りの太さ (厳密には太さの割合)、edgeColorに縁取りの色を渡します。</p>
-          <p>頂点シェーダでは、カメラの位置と光源の位置を用いて、頂点の色を決定するための各種ベクトルを計算しています。<br />
-          視線とカメラのベクトルを接平面に変換して云々かんぬん・・・というけっこう難しい話なのですが、<a href="http://wgld.org/d/webgl/w042.html" target="_blank">こちらの記事</a>に詳しく記載されています。<br />
-          こちらのブログを執筆している方は相当賢いのではないか。。</p>
-          <p>簡単な3D表現であればCSSでも実現できますが、WebGLを使うと表現の幅が一気に広がりますね。</p>
-          
-          
+          float p = (outputMax - outputMin) / (inputMax - inputMin);
+          return ((value - inputMin) * p) + outputMin;
+          }
+          </pre>
+          <p></code></p>
+          <p>map関数は、ある範囲内の値を、別の範囲内にマッピングする関数です。言語によっては実装されていますが、GLSLではないので自分で定義します。</p>
+          <p>どういうことかというと、例えば</p>
+          <p><code></p>
+          <pre class="glsl">
+          map(sin(x), -1.0, 1.0, 0.0, 2.0, true);
+          </pre>
+          <p></code></p>
+          <p>とするとします。valueにsin関数の値を入れた場合、この値の取りうる範囲は-1.0 ~ 1.0なので、inputMinとinputMaxにはそれぞれ-1.0と1.0を入れます。</p>
+          <p>これを、新しい範囲である0.0 ~ 2.0 (outputMin ~ outputMax)の範囲に変換します。sin(x)が-1.0だったら0.0, 1.0だったら2.0、0.5だったら1.0というような値が帰ってきます。</p>
+          <p>clampは、valueがinputMin ~ inputMaxの範囲外の値だった場合に、変換後の値をoutputMin ~ outputMaxの範囲外にならないようにするためのbool値です。</p>
+          <p><code></p>
+          <pre class="glsl">
+          map(value, -1.0, 1.0, 0.0, 2.0, true);
+          </pre>
+          <p></code></p>
+          <p>例えばこの例だと、valueが2.0になった場合、clumpの値がtrueであれば2.0となり、falseであれば3.0になるはずです。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・hsv2rgb関数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // hsvの値をrgbに変換
+          vec3 hsv2rgb(vec3 c) {
+          vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+          vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+          return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+          }
+          </pre>
+          <p></code></p>
+          <p>hsv2rgbは、<a href="https://ja.wikipedia.org/wiki/HSV%E8%89%B2%E7%A9%BA%E9%96%93" target="_blank">HSV色空間</a>の値をRGBに変換する関数です。引数はHSVの3次元ベクトルです。今回は経過時間とrandomValuesの値を使用して、正方形ごとに別々の色相を割り当てるために使用してます。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・getAlpha関数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // 距離から透明度を計算
+          float getAlpha(float distance) {
+          float da = abs(distance - 400.0) / 500.0;
+          return clamp(1.0 - da, 0.0, 1.0);
+          }
+          </pre>
+          <p></code></p>
+          <p>こちらはカメラからの距離によって正方形の透明度を変化させるために使用する関数です。カメラから近すぎると透明になり、遠すぎても透明になります。これによって擬似的に奥行きを表現してます。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・getRad関数</h3>
+          <p><code></p>
+          <pre class="glsl">
+          // time, scale, offsetを使って角度を返す
+          // 範囲は -PI ~ PI
+          float getRad(float scale, float offset) {
+          return map(mod(time * scale + offset, PI * 2.0), 0.0, PI * 2.0, -PI, PI, true);
+          }
+          </pre>
+          <p></code></p>
+          <p>こちらは経過時間timeの値と、引数で与えられた係数と位相差を使って、-PI ~ PIの範囲の角度を算出するための関数です。</p>
+          <p>単純にtime * scale + offsetだと値がどんどん大きくなってしまうので、mod関数を使用して0.0 ~ 2.0 * PIの間に値を収めたあと、map関数で-PI ~ PIの範囲に設定し直しています。</p>
+          <p>0.0 ~ 2.0 * PIでもいい気がしますが、何でこうしたかは忘れましたｗ</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・main関数</h3>
+          <p>やっとmain関数にたどり着きました。。</p>
+          <p>まずは3種類のアニメーションの箇所に注目してください。動きに関しては後述しますが、それぞれのアニメーションの計算において、要所要所でanimationValue1, 2, 3の値がかけられているのがわかるかと思います。</p>
+          <p>これらによって、</p>
+          <p>・animationValue1が1でanimationValue2, 3が0のときはanimation1が適用される<br />
+          ・animationValue2が1でanimationValue1, 3が0のときはanimation2が適用される<br />
+          ・animationValue3が1でanimationValue1, 2が0のときはanimation3が適用される</p>
+          <p>という動きを実現しています。</p>
+          <p>そしてMainVisualクラスで定義されていたanimateメソッドを使用してこれらの値をスムーズに切り替えれば、2つのアニメーション間をスムーズに切り替える動きが可能になるということです。</p>
+          <p>ではアニメーションの計算ではなくまずはフラグメントシェーダに渡すUV座標の計算部分を見てみます。</p>
+          <p><code></p>
+          <pre class="glsl">
+          //
+          // フラグメントシェーダにに渡すUV座標を計算
+          //
+
+          // テクスチャ上の何番目の文字を使うか
+          float txtTextureIndex = mod(charIndex, textureTxtLength);
+
+          // テクスチャの横方向のグリッド単位
+          float uUnit = 1.0 / numTextureGridCols;
+
+          // テクスチャの縦方向のグリッド単位
+          float vUnit = 1.0 / numTextureGridRows;
+
+          // フラグメントシェーダに渡すUV座標を代入
+          vUv = vec2(
+          (uv.x + mod(txtTextureIndex, numTextureGridCols)) * uUnit,
+          (uv.y + floor(txtTextureIndex / numTextureGridCols)) * vUnit
+          );
+          </pre>
+          <p></code></p>
+          <p>txtTextureIndexはコメントにある通りテクスチャ上の何文字目を使うかの値です。例えば今回のサンプルでは62文字を使用しているので、mod関数でcharIndexをtextureTxtLengthで割れば、テクスチャの何番目の文字を使うかが算出できます。</p>
+          <p>たとえば、charIndexが62のときは、一周回ってtxtTextureIndexは0になるので、0文字目(1文字目)となります。</p>
+          <p>uUnitは横方向の1文字分、vUnitは縦方向の1文字分のUV座標の幅です。UV座標はそれぞれの成分が0.0 ~ 1.0なので、横方向に16文字、縦方向に4文字描画されたテクスチャだとすると、</p>
+          <p>0枚目正方形において</p>
+          <p><code></p>
+          <pre class="glsl">
+          // 左上の頂点
+          vUv = vec2(0.0, 0.0);
+
+          // 右上の頂点
+          vUv = vec2(uUnit, 0.0);
+
+          // 左下の頂点
+          vUv = vec2(0.0, vUnit);
+
+          // 右下の頂点
+          vUv = vec2(uUnit, vUnit);
+          </pre>
+          <p></code></p>
+          <p>となります。つまり、一般化すると、</p>
+          <p><code></p>
+          <pre class="glsl">
+          // 左上の頂点
+          vUv = vec2(0.0 + uUnit * [左から何個目の文字か], 0.0 + vUnit * [上から何個目の文字か]);
+
+          // 右上の頂点
+          vUv = vec2(uUnit + uUnit * [左から何個目の文字か], 0.0 + vUnit * [上から何個目の文字か]);
+
+          // 左下の頂点
+          vUv = vec2(0.0 + uUnit * [左から何個目の文字か], vUnit + vUnit * [上から何個目の文字か]);
+
+          // 右下の頂点
+          vUv = vec2(uUnit + uUnit * [左から何個目の文字か], vUnit + vUnit * [上から何個目の文字か]);
+          </pre>
+          <p></code></p>
+          <p>こんな感じになるかと思います。この計算を上記の部分のコードで実現してます。</p>
+          <p>次は座標の変換と、文字色の部分です。</p>
+          <p><code></p>
+          <pre class="glsl">
+          //
+          // 最終的な座標とフラグメントシェーダに渡す文字色を計算
+          //
+
+          // モデル変換
+          vec4 modelPos = modelMatrix * vec4(pos, 1.0);
+
+          // ビュー変換
+          vec4 modelViewPos = viewMatrix * modelPos;
+
+          // ビルボードのための処理 (animation1)
+          modelViewPos += vec4(position, 0.0) * animationValue1;
+
+          // プロジェクション変換した座標をgl_Positionに代入
+          gl_Position = projectionMatrix * modelViewPos;
+
+          // カメラからの距離を算出
+          float d = distance(cameraPosition, modelPos.xyz);
+
+          // フラグメントシェーダに渡すcolorを計算
+          // 時間経過でHSVのHが徐々に変化
+          // 距離に応じてalphaの値が変化
+          vColor = vec4(hsv2rgb(
+          vec3(
+          (sin(getRad(2.0, randomValues.x * 2.0)) + 1.0) * 0.5,
+          0.8,
+          0.8
+          )
+          ), getAlpha(d));
+          </pre>
+          <p></code></p>
+          <p>posはアニメーションを適用した頂点座標です。</p>
+          <p>まずはposにモデル変換をしますが、今回はMesh (FloatingChars)に対して変形をかけてない (座標の移動はすべて頂点シェーダ内で行っている)ので、posにmodelMatrixをかけてもかけなくても結果は変わりません。がFloatingChars自体を変形した場合はこの処理ないと適用されないので、省略はしないでおきます。続いてビュー変換も行います。モデル変換した座標を変数に代入して保持しているのは、後ほどカメラとの距離を出すためです。</p>
+          <p><code></p>
+          <pre class="glsl">
+          // ビルボードのための処理 (animation1)
+          modelViewPos += vec4(position, 0.0) * animationValue1;
+          </pre>
+          <p></code></p>
+          <p>ここは一旦飛ばします。animatoin1絡みなのはおわかりかと思います。</p>
+          <p>このあと、プロジェクション変換した最終的な座標をgl_Positionに代入します。</p>
+          <p>その下からは文字色 (vColor)を計算するための処理です。先程説明しましたがカメラとモデル変換した座標の距離を算出します。getAlpha関数を使って、距離から座標の透明度を算出し、vColorのalpha成分としてます。</p>
+          <p>vColorのrgb成分は、hsv2rgb関数で算出します。HSVのSとVは今回は固定しています (ここも時間経過などで変えたらさらに色にばらつきが出ます)。</p>
+          <p>HはgetRad関数の引数にrandomValues.xを使用して、文字によって色のばらつきをもたせつつ時間経過で色が変わるようにしてます。Hの値は0.0 ~ 1.0なので、1を足して2で割って(0.5をかけて)ます。map関数を使ってもいいと思いますが、使うまでもないでしょう。</p>
+          <p>ここで決定したvColorがフラグメントシェーダに渡されます。</p>
+          <p>さて、やっとアニメーション部分の解説です。もうしんどいです。読んでる方もしんどいかと思いますが。。これで最後です。</p>
+          <p>まず、animation2とanimation3はそんなに難しくない話なので、先に解説します。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・animation2</h3>
+          <p><code></p>
+          <pre class="glsl">
+          //
+          // animation2
+          // 8個のリング状
+          //
+
+          float numRings = 8.0;  // リングの個数
+          float ringIndex = mod(charIndex, numRings);  // どのリングに属するか
+          float numCharsPerRing = numChars / numRings;  // リングごとの文字数
+
+          // 4段階にリングの位置を設定
+          pos.y += animationValue2 * map(ringIndex, 0.0, numRings - 1.0, -60.0, 60.0, true);
+          pos.z += animationValue2 * radius;  // まず手前にradius分移動
+
+          // y軸を中心にリング状になるように文字を配置
+          theta = getRad(10.0, PI * 2.0 / numCharsPerRing * mod((charIndex - ringIndex) / numRings, numCharsPerRing));
+          pos = rotateVec3(pos, animationValue2 * theta, vec3(0.0, 1.0, 0.0));
+          </pre>
+          <p></code></p>
+          <p>animation2は、文字を8つのリング上に配置して、回転させるというものです。</p>
+          <p>まずは正方形がどのリングに属するかの値ringIndexを決めて、ringIndexによってリングのy座標を決めたあと、リング状に配置しています。</p>
+          <p>リング状に配置するには、まずz方向にリングの半径分移動し、そのあとy軸を中心に一文字ずつ角度をずらして配置していきます。その際の角度の計算にgetRad関数を使用して経過時間を絡めているので回転するアニメーションが付いています。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・animation3</h3>
+          <p><code></p>
+          <pre class="glsl">
+          //
+          // animation3
+          // 球面上の移動
+          //
+
+          pos.z += animationValue3 * radius;
+          theta = getRad(6.0, randomValues.x * 10.0);
+          pos = rotateVec3(pos, animationValue3 * theta, vec3(0.0, 1.0, 0.0));
+          theta = getRad(6.0, randomValues.y * 10.0);
+          pos = rotateVec3(pos, animationValue3 * theta, vec3(1.0, 0.0, 0.0));
+          theta = getRad(6.0, randomValues.z * 10.0);
+          pos = rotateVec3(pos, animationValue3 * theta, vec3(0.0, 0.0, 1.0));
+          </pre>
+          <p></code></p>
+          <p>続いてはanimation3です。これはanimaion2よりもずっと単純です。こちらもまずz方向に球の半径分移動し、そのあとx, y, z軸を中心に適当に回転させているだけです。</p>
+          <p>それぞれの軸の回転はgetRad関数にrandomValuesの値を引数として入れて算出しているので、文字ごとにランダムにアニメーションします。</p>
+          <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 1em;">・animation1</h3>
+          <p>最後にずっと飛ばしてきたanimation1の解説をします。</p>
+          <p><code></p>
+          <pre class="glsl">
+          //
+          // animation1
+          // ビルボード
+          //
+
+          pos -= animationValue1 * position;
+          theta = getRad(4.0, (randomValues.x + randomValues.y + randomValues.z) * 20.0);
+          pos.z += animationValue1 * (radius + radius * map(sin(theta), -1.0, 1.0, 0.0, 1.0, true));
+          theta = getRad(4.0, randomValues.x * 20.0);
+          pos = rotateVec3(pos, animationValue1 * theta, vec3(0.0, 1.0, 0.0));
+          theta = getRad(4.0, randomValues.y * 20.0);
+          pos = rotateVec3(pos, animationValue1 * theta, vec3(1.0, 0.0, 0.0));
+          theta = getRad(4.0, randomValues.z * 20.0);
+          pos = rotateVec3(pos, animationValue1 * theta, vec3(0.0, 0.0, 1.0));
+          </pre>
+          <p></code></p>
+          <p>animation1は他のアニメーションと違い、正方形の面が常にカメラの方向を向いているビルボードと呼ばれる手法を使ってます。</p>
+          <p>頂点シェーダは頂点ごとの処理ではありますが、正方形ごとに変形するイメージで考えてみてください。animation1は変形的にはanimation3に近いです。</p>
+          <p>まずz方向にせり出して、x, y, z軸を中心にランダムに回転してます。また、最初にz方向にせり出す距離も時間経過で変化させてます。</p>
+          <p>ただ、そのままだとanimation3のように面の方向がカメラの正面を向かないです。なので、最初に正方形の4頂点をギュッと潰して原点に移動させてしまいます。</p>
+          <p><code></p>
+          <pre class="glsl">
+          pos -= animationValue1 * position;
+          </pre>
+          <p></code></p>
+          <p>そしてanimation3のように変形させます。その後、ビュー変換を行ったあとの座標に、潰した分を加算してもとに戻します。先程とばした以下の部分です。</p>
+          <p><code></p>
+          <pre class="glsl">
+          // ビルボードのための処理 (animation1)
+          modelViewPos += vec4(position, 0.0) * animationValue1;
+          </pre>
+          <p></code></p>
+          <p>なんでこれでカメラの方に向くかというと、ビュー変換をした座標はカメラの見え方が反映された状態です。つまりカメラの目線とz軸が平行になっているイメージです。</p>
+          <p>その状態で潰していた正方形を元に戻すと、全部がカメラの方向に向いたビルボードを実現できる、というわけです。</p>
+          <p>ただこのやり方があっているかどうかはよくわかりませんが、なんとなくできてるような気がしますｗ</p>
+          <p>さて、死ぬほど長くなってしまいましたが、以上で解説を終わります。three.jsは使ったことあるけどシェーダはまだ、、という方はぜひ参考にしてみてください。</p>
+
         div#disqus_thread
-          
-          
+
+
     h2.relatedTtl
       |Related Posts
-      
+
     section.articles
       article
         a(href="detail.html")

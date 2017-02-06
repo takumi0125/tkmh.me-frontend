@@ -241,7 +241,7 @@ class MainVisual
   # resize
   resize: (@width, @height)=>
     @$container.css
-      width: @width
+      width: ''
       height: @height
 
     # buffer
@@ -266,8 +266,10 @@ class MainVisual
 
   # resize2
   resize2: (@width, @height)=>
+    log 'resize!!!', @width, @height
+
     @$container.css
-      width: @width
+      width: ''
       height: @height
 
     @bufferCamera.aspect = @width / @height

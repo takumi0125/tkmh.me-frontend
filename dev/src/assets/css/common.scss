@@ -145,6 +145,8 @@ a {
 }
 
 #contentsInner {
+  overflow: hidden;
+
   & > .contentsTtl {
     z-index: 10;
   }
@@ -235,7 +237,7 @@ body:not(.index) #contentsInner {
 
   &:before {
     @include absoluteTopLeft;
-    transition: transform 1s $easeOutExpo;
+    transition: transform 1s $easeOutExpo 0.4s;
     transform: translateY(-100%);
     content: '';
     background-color: rgba(255, 255, 255, 0.9);
@@ -294,6 +296,7 @@ body:not(.index) #contentsInner {
   }
 
   .scrolled &:before {
+    transition-delay: 0s;
     transform: translateY(0);
   }
 }
