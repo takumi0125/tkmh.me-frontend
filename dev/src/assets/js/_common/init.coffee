@@ -3,6 +3,7 @@ Common = require './Common'
 window.tkmh = tkmh = window.tkmh || {}
 
 # windowをスクロール
+tkmh.windowScrollTweenObj = { value: 0 }
 tkmh.windowScrollTween = null
 tkmh.windowScrollTo = (scrollFrom, scrollTo, duration = 1, onStart = null, onEnd = null)->
   return new Promise (resolve)->
@@ -11,15 +12,17 @@ tkmh.windowScrollTo = (scrollFrom, scrollTo, duration = 1, onStart = null, onEnd
       return
 
     tkmh.windowScrollTween?.kill()
+    tkmh.windowScrollTweenObj = { value: window.scrollY }
     tkmh.windowScrollTween = TweenMax.to(
-      window
+      tkmh.windowScrollTweenObj
       duration
       {
-        scrollTo: { y: scrollTo }
+        value: scrollTo
         overwrite: true
         ease: Expo.easeOut
         # delay: 0.2
         onStart: -> if $.isFunction(onStart) then onStart()
+        onUpdate: -> window.scrollTo 0, tkmh.windowScrollTweenObj.value
         onComplete: ->
           if $.isFunction(onEnd) then onEnd()
           resolve()
