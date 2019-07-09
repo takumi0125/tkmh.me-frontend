@@ -156,11 +156,6 @@ html, body {
   }
 }
 
-.desktop *::-moz-selection {
-  background-color: #000 !important;
-  color: #fff !important;
-}
-
 .desktop *::selection {
   background-color: #000 !important;
   color: #fff !important;
@@ -2010,6 +2005,98 @@ body:not(.index).scrolled .btnScrollTop {
     top: 12px;
     width: 13px;
     height: 2px;
+  }
+}
+
+#redirectModal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#redirectModal > .inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 360px;
+  padding: 32px;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+#redirectModal .txt {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+#redirectModal .btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+#redirectModal .btn a {
+  text-align: center;
+  line-height: 1.6;
+  padding: 8px 16px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#redirectModal .btn span {
+  font-size: 12px;
+}
+
+#redirectModal .btnVisit {
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 700px) {
+  #redirectModal > .inner {
+    max-width: 320px;
+    width: 90%;
+    padding: 16px;
+  }
+  #redirectModal .txt {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  #redirectModal .btn {
+    margin-top: 8px;
+  }
+  #redirectModal .btn a {
+    padding: 8px 16px;
+  }
+  #redirectModal .btn span {
+    font-size: 10px;
+  }
+  #redirectModal .btnVisit {
+    margin-top: 16px;
   }
 }
 

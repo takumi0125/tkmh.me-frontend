@@ -37,6 +37,15 @@ class Common
       tkmh.windowScrollTo @$window.scrollTop(), 0, 0.6, @pause, @start
       return false
 
+    # redirect modal
+    $redirectModal = @$wrapper.find('#redirectModal');
+    $redirectModal.find('.btnStay').on 'click', (e)=>
+      TweenMax.to $redirectModal, 0.2, {
+        autoAlpha: 0,
+        onComplete: ()=> $redirectModal.remove()
+      }
+      return false
+
     @initAsyncTransition()
 
     # window

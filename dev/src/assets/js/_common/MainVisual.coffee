@@ -266,8 +266,6 @@ class MainVisual
 
   # resize2
   resize2: (@width, @height)=>
-    log 'resize!!!', @width, @height
-
     @$container.css
       width: ''
       height: @height
