@@ -50,7 +50,7 @@
     "imagemin-pngquant": "^5.0.0",
     "main-bower-files": "^2.9.0",
     "merge-stream": "^1.0.0",
-    "node-notifier": "^4.4.0",
+    "node-notifier": "^8.0.1",
     "raw-loader": "^0.5.1",
     "run-sequence": "^1.1.4",
     "serve-static": "^1.10.0",
